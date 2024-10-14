@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios"; // Import axios
 import { Navbar } from "../components/Navbar";
 import { RecipeCard } from "../components/RecipeCard";
+import { recipesApi } from "../utils/apiPaths";
 
 export const RecipesPage = () => {
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
@@ -12,7 +13,7 @@ export const RecipesPage = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/recipes");
+                const response = await axios.get(recipesApi.getAllRecipes);
                 setRecipes(response.data.data); 
             } catch (error) {
                 setError(error.response ? error.response.data.message : error.message);
