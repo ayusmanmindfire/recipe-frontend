@@ -29,7 +29,7 @@ export const RecipesPage = () => {
                 });
                 setRecipes(response.data.data); 
             } catch (error) {
-                if(error.response.status===401)
+                if(error.response&&error.response.status===401)
                     navigate('/login')
                 setError(error.response ? error.response.data.message : error.message);
             } finally {
@@ -46,7 +46,7 @@ export const RecipesPage = () => {
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        navigate('/error')
     }
 
     return (
