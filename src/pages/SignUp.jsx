@@ -47,7 +47,7 @@ export const SignUp = () => {
                         "Content-Type": "application/json",
                     },
                 });
-                console.log("Registration successful:", response.data);
+                // console.log("Registration successful:", response.data);
                 setApiError("");
                 navigate('/login'); //On successful registration navigate to login
             } catch (error) {
