@@ -8,6 +8,7 @@ import { RecipesPage } from './pages/RecipesPage';
 import { SignUp } from './pages/SignUp';
 import { Login } from './pages/Login';
 import { CookiesProvider } from 'react-cookie';
+import { ErrorPage } from './pages/ErrorPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
       <Route path='/recipes' element={<RecipesPage/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/login' element={<Login/>}/>
+      <Route path='/error' element={<ErrorPage/>}/>
     </Routes>
   </BrowserRouter>
   </CookiesProvider>
