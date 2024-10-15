@@ -3,19 +3,34 @@ import axios from "axios"; // Import axios
 import { Navbar } from "../components/Navbar";
 import { RecipeCard } from "../components/RecipeCard";
 import { recipesApi } from "../utils/apiPaths";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const RecipesPage = () => {
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
     const [loading, setLoading] = useState(true); // State to handle loading state
     const [error, setError] = useState(null); // State to handle any error
+    const [cookies,setCookie]=useCookies(['user']);
+    const token=cookies.Authorization
+    const navigate=useNavigate();
 
     // Fetch recipes on component mount
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get(recipesApi.getAllRecipes);
+                if(!token){
+                    navigate('/login');
+                    return
+                }
+                const response = await axios.get(recipesApi.getAllRecipes,{
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Send token in header
+                    },
+                });
                 setRecipes(response.data.data); 
             } catch (error) {
+                if(error.response.status===401)
+                    navigate('/login')
                 setError(error.response ? error.response.data.message : error.message);
             } finally {
                 setLoading(false);
