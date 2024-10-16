@@ -10,26 +10,26 @@ export const RecipesPage = () => {
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
     const [loading, setLoading] = useState(true); // State to handle loading state
     const [error, setError] = useState(null); // State to handle any error
-    const [cookies,setCookie]=useCookies(['user']);
-    const token=cookies.Authorization
-    const navigate=useNavigate();
+    const [cookies, setCookie] = useCookies(['user']);
+    const token = cookies.Authorization
+    const navigate = useNavigate();
 
     // Fetch recipes on component mount
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                if(!token){
+                if (!token) {
                     navigate('/login');
                     return
                 }
-                const response = await axios.get(recipesApi.getAllRecipes,{
+                const response = await axios.get(recipesApi.getAllRecipes, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Send token in header
                     },
                 });
-                setRecipes(response.data.data); 
+                setRecipes(response.data.data);
             } catch (error) {
-                if(error.response&&error.response.status===401)
+                if (error.response && error.response.status === 401)
                     navigate('/login')
                 setError(error.response ? error.response.data.message : error.message);
             } finally {
@@ -53,8 +53,22 @@ export const RecipesPage = () => {
         <>
             <Navbar />
             <div className="recipes-page p-4">
-                <h1 className="text-2xl font-bold text-center mb-4">Recipe Cards</h1>
-                
+                <div className="flex justify-evenly gap-1  mb-3 h-10">
+                    <div className="flex mb-3 h-10 gap-2">
+                        <input type="text" placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />
+                        <button className="bg-primary hover:bg-hoverPrimary text-white rounded-lg px-2 py-1 font-Rubik">Search</button>
+                    </div>
+                    <div>
+                        <button className="hidden sm:flex bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 font-Rubik" onClick={()=>{
+                            navigate('/addRecipe')
+                        }}>Add recipe</button>
+                        {/* Responsive button */}
+                        <button className="sm:hidden bg-green-500 hover:bg-green-600 text-white rounded-2xl p-2 px-4 font-bold font-Rubik">+</button>
+                    </div>
+
+                </div>
+
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {recipes.length > 0 ? (
                         recipes.map((recipe) => (
@@ -64,13 +78,13 @@ export const RecipesPage = () => {
                                 ingredients={recipe.ingredients}
                                 steps={recipe.steps}
                                 // Constructing the full image URL
-                                imageUrl={`http://localhost:5000/${recipe.image}`} 
+                                imageUrl={`http://localhost:5000/${recipe.image}`}
                             />
                         ))
                     ) : (
                         <div>No recipes found</div>
                     )}
-                </div>  
+                </div>
             </div>
         </>
     );

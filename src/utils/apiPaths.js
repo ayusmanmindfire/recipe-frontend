@@ -4,5 +4,6 @@ export const userApi={
 }
 
 export const recipesApi={
-    getAllRecipes:"http://localhost:5000/recipes"
+    getAllRecipes:"http://localhost:5000/recipes",
+    addNewRecipe:"http://localhost:5000/recipes"
 }
