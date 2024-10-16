@@ -63,7 +63,9 @@ export const RecipesPage = () => {
                             navigate('/addRecipe')
                         }}>Add recipe</button>
                         {/* Responsive button */}
-                        <button className="sm:hidden bg-green-500 hover:bg-green-600 text-white rounded-2xl p-2 px-4 font-bold font-Rubik">+</button>
+                        <button className="sm:hidden bg-green-500 hover:bg-green-600 text-white rounded-2xl p-2 px-4 font-bold font-Rubik" onClick={()=>{
+                            navigate('/addRecipe')
+                        }}>+</button>
                     </div>
 
                 </div>

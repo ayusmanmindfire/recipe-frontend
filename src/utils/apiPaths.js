@@ -1,6 +1,7 @@
 export const userApi={
     registerUser:"http://localhost:5000/user/register",
-    loginUser:"http://localhost:5000/user/login"
+    loginUser:"http://localhost:5000/user/login",
+    verifyTokenUser:"http://localhost:5000/user/verify"
 }
 
 export const recipesApi={
