@@ -9,6 +9,7 @@ import { SignUp } from './pages/SignUp';
 import { Login } from './pages/Login';
 import { CookiesProvider } from 'react-cookie';
 import { ErrorPage } from './pages/ErrorPage';
+import { RecipeForm } from './pages/RecipeForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +21,7 @@ root.render(
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/error' element={<ErrorPage/>}/>
+      <Route path='/addRecipe' element={<RecipeForm/>}/>
     </Routes>
   </BrowserRouter>
   </CookiesProvider>
