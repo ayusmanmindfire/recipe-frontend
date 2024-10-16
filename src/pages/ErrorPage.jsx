@@ -5,13 +5,13 @@ export const ErrorPage=({message})=>{
     return(
         <>
             <Navbar/>
-            <div className="h-screen flex items-center gap-2 bg-[#d7e8f8]">
+            <div className="h-screen items-center gap-2 bg-[#d7e8f8] p-2 md:flex">
                 {/* Image content */}
                 <div >
-                    <img src={errorImage} alt="" className="h-screen"/>
+                    <img src={errorImage} alt="" className="md:h-screen"/>
                 </div>
                 {/* Specific error message */}
-                <div className="font-Rubik text-5xl text-primary">
+                <div className="font-Rubik text-5xl text-primary text-center">
                     Something went wrong
                 </div>
             </div>
