@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import deleteImage from "../assets/delete.png";
 import editImage from "../assets/edit.png";
 import starImage from "../assets/star.png";
+import { Modal } from "@mui/material";
+import { RatingModal } from "../components/RatingModal";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -16,6 +18,9 @@ export const RecipeDetails = () => {
     const [ratings, setRatings] = useState(null); // State for rating management
     const [loading, setLoading] = useState(true);
     const [userEmail, setUserEmail] = useState(null); // State for storing user email
+    const [openRating, setOpenRating] = useState(false); //state for handling rating form modal
+    const handleOpen = () => setOpenRating(true);
+    const handleClose = () => setOpenRating(false);
 
     const token = cookies.Authorization;
     const navigate = useNavigate();
@@ -66,7 +71,7 @@ export const RecipeDetails = () => {
             }
         };
         fetchRecipeDetails();
-    }, [token, id, navigate]);
+    }, [token, id, navigate,openRating]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -87,12 +92,12 @@ export const RecipeDetails = () => {
     };
 
     // Function to handle star (rating) button click
-    const handleRating = () => {
-        navigate(`/rateRecipe/${id}`);
-    };
+    // const handleRating = () => {
+    //     navigate(`/rateRecipe/${id}`);
+    // };
     //function to handle edit recipe
     const handleEdit = () => {
-        navigate('/editRecipe/' + id);
+        navigate(`/editRecipe/${id}`);
     }
 
     return (
@@ -106,11 +111,22 @@ export const RecipeDetails = () => {
                     <div className="flex space-x-2">
                         {/* Star Button */}
                         <button
-                            onClick={handleRating}
+                            onClick={handleOpen}
                             className="bg-green-400 hover:bg-green-600 text-white px-4 py-2 rounded-full"
                         >
                             <img src={starImage} alt="Rate Recipe" className="w-5" />
                         </button>
+
+                        {/* Modal for rating form */}
+                        <Modal
+                            open={openRating}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            {/* Component for rating modal */}
+                            <RatingModal recipeID={id} handleClose={handleClose}/> 
+                        </Modal>
 
                         {userEmail === recipeDetails.createdBy && ( // Conditionally render buttons (which or only enabled for authors of the recipe)
                             <>

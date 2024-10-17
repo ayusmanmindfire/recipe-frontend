@@ -16,6 +16,6 @@ export const recipesApi={
 
 export const ratingsApi={
     getRatings:`${apiUrl}/ratings/`,
-    addRatings:`${apiUrl}/ratings`,
+    addRatings:`${apiUrl}/ratings/`,
 
 }
