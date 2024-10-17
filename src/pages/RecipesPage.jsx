@@ -12,6 +12,7 @@ export const RecipesPage = () => {
     const [loading, setLoading] = useState(true); // State to handle loading state
     const [error, setError] = useState(null); // State to handle any error
     const [cookies, setCookie] = useCookies(['user']);
+    const [query,setQuery]=useState("")
     const token = cookies.Authorization
     const navigate = useNavigate();
 
@@ -50,14 +51,28 @@ export const RecipesPage = () => {
         navigate('/error')
     }
 
+    //function for handling search query
+    const handleSearch=async()=>{
+        try {
+            const response=await axios.get(recipesApi.searchRecipes+query,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setRecipes(response.data.data)
+        } catch (error) {
+            navigate('/error')
+        }
+    }
+
     return (
         <>
             <Navbar />
             <div className="recipes-page p-4">
                 <div className="flex justify-evenly gap-1  mb-3 h-10">
                     <div className="flex mb-3 h-10 gap-2">
-                        <input type="text" placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />
-                        <button className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik">Search</button>
+                        <input type="text" value={query} onChange={(e)=>{setQuery(e.target.value)}} placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />
+                        <button onClick={handleSearch} className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik">Search</button>
                     </div>
                     <div>
                         <button className="hidden sm:flex bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 font-Rubik" onClick={()=>{
