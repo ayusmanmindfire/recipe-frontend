@@ -11,6 +11,7 @@ import { CookiesProvider } from 'react-cookie';
 import { ErrorPage } from './pages/ErrorPage';
 import { RecipeForm } from './pages/RecipeForm';
 import { Profile } from './pages/Profile';
+import { RecipeDetails } from './pages/RecipeDetails';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,7 @@ root.render(
     <Routes>
       <Route path='/' element={<App />} />
       <Route path='/recipes' element={<RecipesPage/>}/>
+      <Route path='/recipes/:id' element={<RecipeDetails/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/error' element={<ErrorPage/>}/>

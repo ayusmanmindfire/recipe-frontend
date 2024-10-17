@@ -160,13 +160,14 @@ export const RecipeForm = () => {
                                 <div className="text-red-600 mt-1">{formik.errors.image}</div>
                             )}
                         </div>
-
+                        <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="w-full bg-primary hover:bg-hoverPrimary text-white py-3 rounded-lg font-semibold"
+                            className="w-1/2 bg-primary hover:bg-hoverPrimary text-white py-3 rounded-lg font-semibold"
                         >
                             Add
                         </button>
+                        </div>
 
                         {/* API Error Message */}
                         {apiError && (
