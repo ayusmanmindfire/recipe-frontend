@@ -11,7 +11,8 @@ export const recipesApi={
     addNewRecipe:`${apiUrl}/recipes`,
     getRecipeDetails:`${apiUrl}/recipes/`,
     updateRecipe:`${apiUrl}/recipes/`,
-    deleteRecipes:`${apiUrl}/recipes/`
+    deleteRecipes:`${apiUrl}/recipes/`,
+    searchRecipes:`${apiUrl}/recipes/search?q=`
 }
 
 export const ratingsApi={
