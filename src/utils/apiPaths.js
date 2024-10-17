@@ -10,6 +10,7 @@ export const recipesApi={
     getAllRecipes:`${apiUrl}/recipes`,
     addNewRecipe:`${apiUrl}/recipes`,
     getRecipeDetails:`${apiUrl}/recipes/`,
+    updateRecipe:`${apiUrl}/recipes/`,
     deleteRecipes:`${apiUrl}/recipes/`
 }
 
