@@ -5,6 +5,7 @@ import { RecipeCard } from "../components/RecipeCard";
 import { recipesApi } from "../utils/apiPaths";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+const apiUrl=process.env.REACT_APP_API_URL;
 
 export const RecipesPage = () => {
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
@@ -56,7 +57,7 @@ export const RecipesPage = () => {
                 <div className="flex justify-evenly gap-1  mb-3 h-10">
                     <div className="flex mb-3 h-10 gap-2">
                         <input type="text" placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />
-                        <button className="bg-primary hover:bg-hoverPrimary text-white rounded-lg px-2 py-1 font-Rubik">Search</button>
+                        <button className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik">Search</button>
                     </div>
                     <div>
                         <button className="hidden sm:flex bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 font-Rubik" onClick={()=>{
@@ -80,7 +81,8 @@ export const RecipesPage = () => {
                                 ingredients={recipe.ingredients}
                                 steps={recipe.steps}
                                 // Constructing the full image URL
-                                imageUrl={`http://localhost:5000/${recipe.image}`}
+                                imageUrl={`${apiUrl}/${recipe.image}`}
+                                id={recipe._id}
                             />
                         ))
                     ) : (

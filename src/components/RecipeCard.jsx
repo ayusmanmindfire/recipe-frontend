@@ -1,10 +1,13 @@
-export function RecipeCard({ title, ingredients, steps, imageUrl }) {
+import { useNavigate } from "react-router-dom";
+
+export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
     // Limit number of ingredients to display initially
-    const displayedIngredients = ingredients?.slice(0, 3);
-    const hasMoreIngredients = ingredients?.length > 3;
+    const displayedIngredients = ingredients?.slice(0, 2);
+    const hasMoreIngredients = ingredients?.length > 2;
+    const navigate=useNavigate();
 
     return (
-        <div className="card max-w-sm p-4 rounded-lg shadow-md bg-white border-gray-300">
+        <div className="card max-w-sm p-3 rounded-lg shadow-md bg-white flex flex-col justify-between border-gray-300">
             {/* Recipe Image */}
             <img
                 src={imageUrl || "https://via.placeholder.com/150"}
@@ -49,6 +52,11 @@ export function RecipeCard({ title, ingredients, steps, imageUrl }) {
                         </span>
                     )}
                 </div>
+            </div>
+            <div className="flex justify-center">
+                <button className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik w-1/2" onClick={()=>{navigate(`/recipes/${id}`)}}>
+                    Details
+                </button>
             </div>
         </div>
     );

@@ -1,10 +1,21 @@
+const apiUrl=process.env.REACT_APP_API_URL;
+
 export const userApi={
-    registerUser:"http://localhost:5000/user/register",
-    loginUser:"http://localhost:5000/user/login",
-    verifyTokenUser:"http://localhost:5000/user/verify"
+    registerUser:`${apiUrl}/user/register`,
+    loginUser:`${apiUrl}/user/login`,
+    verifyTokenUser:`${apiUrl}/user/verify`
 }
 
 export const recipesApi={
-    getAllRecipes:"http://localhost:5000/recipes",
-    addNewRecipe:"http://localhost:5000/recipes"
+    getAllRecipes:`${apiUrl}/recipes`,
+    addNewRecipe:`${apiUrl}/recipes`,
+    getRecipeDetails:`${apiUrl}/recipes/`,
+    updateRecipe:`${apiUrl}/recipes/`,
+    deleteRecipes:`${apiUrl}/recipes/`
+}
+
+export const ratingsApi={
+    getRatings:`${apiUrl}/ratings/`,
+    addRatings:`${apiUrl}/ratings/`,
+
 }

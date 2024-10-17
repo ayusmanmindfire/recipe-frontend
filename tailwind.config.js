@@ -6,10 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#f5964e',
-        hoverPrimary: '#e8731c',
+        primary: '#fb5607',
+        hoverPrimary: '#ffbe0b',
         secondary: '#ffffff',
-        background: '#e3342f',
+        contrastButton: '#ffd60a',
+        hoverContrastButton: '#fb8500'
       },
     },
     fontFamily:{
