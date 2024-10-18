@@ -1,14 +1,14 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { LandingPage } from './pages/LandingPage';
-import { RecipesPage } from './pages/RecipesPage';
-import { SignUp } from './pages/SignUp';
-import { Login } from './pages/Login';
-import { ErrorPage } from './pages/ErrorPage';
-import { Profile } from './pages/Profile';
-import { RecipeDetails } from './pages/RecipeDetails';
-import { AddRecipePage } from './pages/AddRecipePage';
-import { EditRecipePage } from './pages/EditRecipePage';
+import { LandingPage } from './pages/Common/LandingPage';
+import { RecipesPage } from './pages/Recipes/RecipesPage';
+import { SignUp } from './pages/Users/SignUp';
+import { Login } from './pages/Users/Login';
+import { ErrorPage } from './pages/Common/ErrorPage';
+import { Profile } from './pages/Users/Profile';
+import { RecipeDetails } from './pages/Recipes/RecipeDetails';
+import { AddRecipePage } from './pages/Recipes/AddRecipePage';
+import { EditRecipePage } from './pages/Recipes/EditRecipePage';
 
 function App() {
    return (

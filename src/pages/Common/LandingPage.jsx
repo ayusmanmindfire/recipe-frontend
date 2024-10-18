@@ -1,6 +1,6 @@
-import { Navbar } from "../components/Navbar"
-import cookingImage from "../assets/cooking.jpg"
-import { CustomButton } from "../components/CustomButton"
+import { Navbar } from "../../components/Navbar"
+import cookingImage from "../../assets/cooking.jpg"
+import { CustomButton } from "../../components/CustomButton"
 import { useNavigate } from "react-router-dom"
 
 export const LandingPage = () => {

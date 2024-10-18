@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../components/Navbar"
+import { Navbar } from "../../components/Navbar"
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-import { userApi } from "../utils/apiPaths";
+import { userApi } from "../../utils/apiPaths";
 import axios from "axios";
-import chefImage from "../assets/chef.jpg"
+import chefImage from "../../assets/chef.jpg"
 
 export const Profile=()=>{
     const [cookies, setCookie,removeCookie] = useCookies(['user']);

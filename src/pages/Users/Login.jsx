@@ -1,7 +1,7 @@
 import axios from "axios";
-import { Navbar } from "../components/Navbar"
+import { Navbar } from "../../components/Navbar"
 import { useFormik } from "formik";
-import { userApi } from "../utils/apiPaths";
+import { userApi } from "../../utils/apiPaths";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
