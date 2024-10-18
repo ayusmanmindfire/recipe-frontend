@@ -1,11 +1,11 @@
-import { Navbar } from "../components/Navbar";
-import { RecipeForm } from "../components/RecipeForm";
+import { Navbar } from "../../components/Navbar";
+import { RecipeForm } from "../../components/RecipeForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { recipesApi } from "../utils/apiPaths";
+import { recipesApi } from "../../utils/apiPaths";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import eggCooking from "../assets/eggCooking.jpg";
+import eggCooking from "../../assets/eggCooking.jpg";
 
 export const AddRecipePage = () => {
     const [apiError, setApiError] = useState("");

@@ -1,5 +1,5 @@
-import { Navbar } from "../components/Navbar";
-import errorImage from "../assets/errorImage.jpg"
+import { Navbar } from "../../components/Navbar";
+import errorImage from "../../assets/errorImage.jpg"
 
 export const ErrorPage=({message})=>{
     return(

@@ -1,9 +1,9 @@
-import { Navbar } from "../components/Navbar";
+import { Navbar } from "../../components/Navbar";
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { userApi } from "../utils/apiPaths";
+import { userApi } from "../../utils/apiPaths";
 
 const validate = (values) => {
     const errors = {}; //object of errors for specific fields

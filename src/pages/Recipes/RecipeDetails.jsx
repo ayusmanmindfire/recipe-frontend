@@ -1,15 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Navbar } from "../components/Navbar";
+import { Navbar } from "../../components/Navbar";
 import { useCookies } from "react-cookie";
-import { ratingsApi, recipesApi, userApi } from "../utils/apiPaths";
+import { ratingsApi, recipesApi, userApi } from "../../utils/apiPaths";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import deleteImage from "../assets/delete.png";
-import editImage from "../assets/edit.png";
-import starImage from "../assets/star.png";
+import deleteImage from "../../assets/delete.png";
+import editImage from "../../assets/edit.png";
+import starImage from "../../assets/star.png";
 import { Modal } from "@mui/material";
-import { RatingModal } from "../components/RatingModal";
-import { Ratings } from "../components/Ratings";
+import { RatingModal } from "../../components/RatingModal";
+import { Ratings } from "../../components/Ratings";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

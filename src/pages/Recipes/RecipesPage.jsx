@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios"; // Import axios
-import { Navbar } from "../components/Navbar";
-import { RecipeCard } from "../components/RecipeCard";
-import { recipesApi } from "../utils/apiPaths";
+import { Navbar } from "../../components/Navbar";
+import { RecipeCard } from "../../components/RecipeCard";
+import { recipesApi } from "../../utils/apiPaths";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 const apiUrl=process.env.REACT_APP_API_URL;
