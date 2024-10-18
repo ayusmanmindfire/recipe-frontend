@@ -158,13 +158,6 @@ export const RecipeDetails = () => {
                         className="w-full h-64 object-cover rounded-lg"
                     />
                 </div>
-
-                {/* Recipe Steps */}
-                <div className="mb-6">
-                    <h2 className="text-2xl font-semibold">Steps</h2>
-                    <p className="text-gray-700 mt-2 wrap">{recipeDetails.steps || "No steps provided."}</p>
-                </div>
-
                 {/* Ingredients */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold">Ingredients</h2>
@@ -174,6 +167,12 @@ export const RecipeDetails = () => {
                         ))}
                     </ul>
                 </div>
+
+                {/* Recipe Steps */}
+                <div className="mb-6">
+                    <h2 className="text-2xl font-semibold">Steps</h2>
+                    <p className="text-gray-700 mt-2 wrap">{recipeDetails.steps || "No steps provided."}</p>
+                </div>               
 
                 {/* Ratings */}
                 <div>
