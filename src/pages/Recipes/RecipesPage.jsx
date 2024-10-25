@@ -5,6 +5,7 @@ import { RecipeCard } from "../../components/RecipeCard";
 import { recipesApi } from "../../utils/apiPaths";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import SimpleBackdrop from "../../components/Loader";
 const apiUrl=process.env.REACT_APP_API_URL;
 
 export const RecipesPage = () => {
@@ -44,7 +45,7 @@ export const RecipesPage = () => {
 
     // Conditional rendering based on loading and error states
     if (loading) {
-        return <div>Loading...</div>;
+        return <SimpleBackdrop  isLoading={loading}/>
     }
 
     if (error) {
