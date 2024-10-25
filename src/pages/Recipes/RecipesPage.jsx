@@ -68,7 +68,7 @@ export const RecipesPage = () => {
     return (
         <>
             <Navbar />
-            <div className="recipes-page p-4">
+            <div className="recipes-page dark:bg-gray-700 p-4 transition-colors duration-200">
                 <div className="flex justify-evenly gap-1  mb-3 h-10">
                     <div className="flex mb-3 h-10 gap-2">
                         <input type="text" value={query} onChange={(e)=>{setQuery(e.target.value)}} placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />

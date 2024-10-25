@@ -42,9 +42,11 @@ export const AddRecipePage = () => {
     return (
         <>
             <Navbar />
+            <div className="dark:bg-gray-800 dark:text-white h-full">
             <div className="container mx-auto py-5">
                 <h2 className="text-2xl font-bold text-center font-Rubik">Add New Recipe</h2>
                 <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={eggCooking} />
+            </div>
             </div>
         </>
     );

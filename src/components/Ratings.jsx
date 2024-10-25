@@ -8,7 +8,7 @@ export const Ratings = ({ ratings }) => {
                         {ratings.map((rating, index) => (
                             <div key={index} className="border p-4 rounded-lg shadow-sm bg-white">
                                 <div className="flex items-center justify-between">
-                                    <span className="font-bold">{rating.rating}/5</span>
+                                    <span className="font-bold dark:text-black">{rating.rating}/5</span>
                                     <span className="text-gray-500 text-sm">by {rating.createdBy}</span>
                                 </div>
                                 <p className="text-gray-700 mt-2">{rating.feedback || "No feedback provided."}</p>

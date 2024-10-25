@@ -1,19 +1,25 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { Navbar } from "../../components/Navbar";
-import { useCookies } from "react-cookie";
-import { ratingsApi, recipesApi, userApi } from "../../utils/apiPaths";
-import axios from "axios";
+// React imports
 import { useEffect, useState } from "react";
+
+// Third party imports
+import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { Modal } from "@mui/material";
+import axios from "axios";
+
+// Static imports
+import { Navbar } from "../../components/Navbar";
+import { ratingsApi, recipesApi, userApi } from "../../utils/apiPaths";
 import deleteImage from "../../assets/delete.png";
 import editImage from "../../assets/edit.png";
 import starImage from "../../assets/star.png";
-import { Modal } from "@mui/material";
 import { RatingModal } from "../../components/RatingModal";
 import { Ratings } from "../../components/Ratings";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+
 
 export const RecipeDetails = () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [cookies] = useCookies(['user']);
     const [recipeDetails, setRecipeDetails] = useState(null);
     const [ratings, setRatings] = useState(null); // State for rating management
@@ -104,7 +110,8 @@ export const RecipeDetails = () => {
     return (
         <>
             <Navbar />
-            <div className="container mx-auto p-4 md:p-8">
+            <div className="dark:bg-gray-800 transition-colors duration-200">
+            <div className="container mx-auto dark:bg-gray-700 dark:text-white p-4 md:p-8">
                 {/* Recipe Details Header */}
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-xl md:text-3xl font-bold">{recipeDetails.title}</h1>
@@ -162,7 +169,7 @@ export const RecipeDetails = () => {
                 {/* Ingredients */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold">Ingredients</h2>
-                    <ul className="list-disc list-inside text-gray-700 mt-2">
+                    <ul className="list-disc list-inside text-gray-700 mt-2 dark:text-white">
                         {recipeDetails.ingredients?.map((ingredient, index) => (
                             <li key={index}>{ingredient}</li>
                         ))}
@@ -172,12 +179,13 @@ export const RecipeDetails = () => {
                 {/* Recipe Steps */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold">Steps</h2>
-                    <p className="text-gray-700 mt-2 wrap">{recipeDetails.steps || "No steps provided."}</p>
+                    <p className="text-gray-700 mt-2 wrap  dark:text-white">{recipeDetails.steps || "No steps provided."}</p>
                 </div>               
 
                 {/* Ratings */}
                 <Ratings ratings={ratings}/>
             </div>
+            </div>    
         </>
     );
 };

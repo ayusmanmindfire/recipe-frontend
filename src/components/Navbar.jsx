@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toggleTheme } from '../redux/themeSlice';
 
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false); // State to handle menu open/close
-    const linkStyle = "hover:bg-secondary hover:text-primary text-white rounded p-1 font-Rubik";
+    const theme = useSelector((state) => state.theme.theme);
+    const dispatch=useDispatch();
+    const linkStyle = "hover:bg-secondary hover:text-primary dark:hover:text-darkPrimary text-white rounded p-1 font-Rubik";
     const navigate = useNavigate();
 
+    useEffect(()=>{
+        if(theme==="dark")
+            document.documentElement.classList.add("dark");
+        else
+            document.documentElement.classList.remove("dark");
+    },[theme]);
+
     return (
-        <nav className="bg-primary p-3">
+        <nav className="bg-primary dark:bg-darkPrimary p-3">
             <div className="flex justify-between items-center">
                 <div className="text-white text-2xl font-bold font-Rubik ">
                     Delicious Recipes
@@ -27,6 +38,7 @@ export function Navbar() {
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex gap-3 items-center">
+                    <button className={linkStyle} onClick={() => dispatch(toggleTheme())}>{theme}</button>
                     <button className={linkStyle} onClick={() => navigate("/")}>Home</button>
                     <button className={linkStyle} onClick={() => navigate("/recipes")}>Recipes</button>
                     <button className={linkStyle} onClick={() => navigate("/profile")}>Profile</button>
@@ -36,6 +48,10 @@ export function Navbar() {
             {/* Mobile Menu */}
             {isOpen && (
                 <div className="lg:hidden mt-3 space-y-2">
+                     <button className={`${linkStyle} w-full block text-left`} onClick={() => {
+                        setIsOpen(false);
+                        dispatch(toggleTheme())
+                        }}>{theme}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
                         navigate("/"); }}>Home</button>
