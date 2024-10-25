@@ -8,7 +8,7 @@ import chefImage from "../../assets/chef.jpg"
 import SimpleBackdrop from "../../components/Loader";
 
 export const Profile=()=>{
-    const [cookies, setCookie,removeCookie] = useCookies(['user']);
+    const [cookies,removeCookie] = useCookies(['user']);
     const [userDetails,setUserDetails]=useState(null);
     const [loading, setLoading] = useState(true); // State to handle loading state
     const token = cookies.Authorization
