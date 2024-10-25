@@ -15,6 +15,7 @@ import editImage from "../../assets/edit.png";
 import starImage from "../../assets/star.png";
 import { RatingModal } from "../../components/RatingModal";
 import { Ratings } from "../../components/Ratings";
+import SimpleBackdrop from "../../components/Loader";
 
 
 
@@ -81,7 +82,7 @@ export const RecipeDetails = () => {
     }, [token, id, navigate,openRating]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <SimpleBackdrop isLoading={loading}/>;
     }
 
     // Function to delete recipe

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { userApi } from "../../utils/apiPaths";
 import axios from "axios";
 import chefImage from "../../assets/chef.jpg"
+import SimpleBackdrop from "../../components/Loader";
 
 export const Profile=()=>{
     const [cookies, setCookie,removeCookie] = useCookies(['user']);
@@ -38,7 +39,7 @@ export const Profile=()=>{
     },[]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <SimpleBackdrop isLoading={loading}/>;
     }
     return(
         <>
