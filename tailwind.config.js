@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -10,7 +11,14 @@ module.exports = {
         hoverPrimary: '#ffbe0b',
         secondary: '#ffffff',
         contrastButton: '#ffd60a',
-        hoverContrastButton: '#fb8500'
+        hoverContrastButton: '#fb8500',
+
+         // Dark mode colors
+         darkPrimary: '#45036b',
+        darkHoverPrimary: '#946200',
+        darkSecondary: '#333333',
+        darkContrastButton: '#8a7000',
+        darkHoverContrastButton: '#7a4600',
       },
     },
     fontFamily:{

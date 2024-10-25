@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { userApi } from "../../utils/apiPaths";
 import axios from "axios";
 import chefImage from "../../assets/chef.jpg"
+import SimpleBackdrop from "../../components/Loader";
 
 export const Profile=()=>{
-    const [cookies, setCookie,removeCookie] = useCookies(['user']);
+    const [cookies,removeCookie] = useCookies(['user']);
     const [userDetails,setUserDetails]=useState(null);
     const [loading, setLoading] = useState(true); // State to handle loading state
     const token = cookies.Authorization
@@ -38,15 +39,15 @@ export const Profile=()=>{
     },[]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <SimpleBackdrop isLoading={loading}/>;
     }
     return(
         <>
     <Navbar />
     {/* Main Container */}
-    <div className="min-h-screen bg-gray-100 py-10 px-6 flex flex-col items-center">
+    <div className="min-h-screen dark:bg-gray-700 bg-gray-100 py-10 px-6 flex flex-col items-center transition-colors duration-200">
         {/* Profile Card */}
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md font-Rubik">
+        <div className="bg-white p-8 dark:bg-gray-900 dark:text-white rounded-lg shadow-md w-full max-w-md font-Rubik">
             <h2 className="text-2xl font-semibold text-center mb-6">User Profile</h2>
             {/* User Details Section */}
             <div className="space-y-4 ">

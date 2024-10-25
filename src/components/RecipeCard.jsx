@@ -7,7 +7,7 @@ export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
     const navigate=useNavigate();
 
     return (
-        <div className="card max-w-sm p-3 rounded-lg shadow-md bg-white flex flex-col justify-between border-gray-300">
+        <div className="card max-w-sm p-3 rounded-lg shadow-md bg-white dark:bg-gray-900 flex flex-col justify-between border-gray-300">
             {/* Recipe Image */}
             <img
                 src={imageUrl || "https://via.placeholder.com/150"}
@@ -16,14 +16,14 @@ export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
             />
 
             {/* Recipe Title */}
-            <h2 className="text-xl font-semibold text-gray-800 overflow-hidden text-ellipsis whitespace-nowrap">
+            <h2 className="text-xl font-semibold dark:text-gray-300 text-gray-800 overflow-hidden text-ellipsis whitespace-nowrap">
                 {title || "Untitled Recipe"}
             </h2>
 
             {/* Ingredients */}
-            <div className="text-sm text-gray-600 mt-2">
+            <div className="text-sm text-gray-600 mt-2 dark:text-gray-400">
                 <h3 className="font-semibold">Ingredients:</h3>
-                <ul className="list-disc list-inside max-h-20">
+                <ul className="list-disc list-inside max-h-20 ">
                     {displayedIngredients && displayedIngredients.length > 0 ? (
                         displayedIngredients.map((ingredient, index) => (
                             <li key={index} className="overflow-hidden text-ellipsis whitespace-nowrap">
@@ -35,14 +35,14 @@ export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
                     )}
                 </ul>
                 {hasMoreIngredients && (
-                    <span className="text-gray-400">
+                    <span className="text-gray-400 ">
                         ...more
                     </span>
                 )}
             </div>
 
             {/* Steps */}
-            <div className="text-sm text-gray-600 mt-4">
+            <div className="text-sm text-gray-600 mt-4 dark:text-gray-400">
                 <h3 className="font-semibold">Steps:</h3>
                 <div className="relative max-h-20 overflow-hidden line-clamp-2">
                     <p>{steps || "No steps provided"}</p>

@@ -56,10 +56,10 @@ export const Login=()=>{
     return(
         <>
             <Navbar />
-            <div className="section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100 ">
+            <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100 ">
                  {/*Signup option */}
                  <div className="flex flex-col items-center justify-center space-y-4">
-                    <p className="text-lg">Do not have an account?</p>
+                    <p className="text-lg dark:text-white">Do not have an account?</p>
                     <button
                         className="bg-primary hover:bg-hoverPrimary text-white py-3 px-6 rounded-lg font-semibold"
                         onClick={() => navigate('/signup')}
@@ -68,8 +68,8 @@ export const Login=()=>{
                     </button>
                 </div>
                 {/* Form Container */}
-                <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg">
-                    <h2 className="text-2xl font-semibold mb-6 text-center">Log-in to your Account</h2>
+                <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800">
+                    <h2 className=" dark:text-white text-2xl font-semibold mb-6 text-center">Log-in to your Account</h2>
                     <form onSubmit={formik.handleSubmit} className="space-y-4">
                         
                         <div>

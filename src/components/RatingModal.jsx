@@ -58,7 +58,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
     });
 
     return (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-lg w-[80%] md:w-[40%]">
+        <div className="dark:bg-gray-700 dark:text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-lg w-[80%] md:w-[40%]">
             <h2 className="text-lg font-bold mb-4">Rate this Recipe</h2>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
@@ -70,7 +70,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                         name="rating"
                         value={formik.values.rating}
                         onChange={formik.handleChange}
-                        className="w-full p-2 border border-gray-300 rounded"
+                        className="w-full p-2 border border-gray-300 rounded dark:bg-gray-400"
                     />
                     {/* Error handling */}
                     {formik.errors.rating && (
@@ -84,7 +84,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                         name="feedback"
                         value={formik.values.feedback}
                         onChange={formik.handleChange}
-                        className="w-full p-2 border border-gray-300 rounded"
+                        className="w-full p-2 border border-gray-300 rounded dark:bg-gray-400 dark:placeholder-white"
                         rows="4"
                         placeholder="Leave your feedback here"
                     />
