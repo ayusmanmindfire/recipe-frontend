@@ -1,3 +1,4 @@
+//Static imports
 import { Navbar } from "../../components/Navbar";
 import errorImage from "../../assets/errorImage.jpg"
 

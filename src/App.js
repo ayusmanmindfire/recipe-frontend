@@ -1,5 +1,8 @@
-import './App.css';
+//Third party imports
 import { Routes, Route } from 'react-router-dom';
+
+//Static imports
+import './App.css';
 import { LandingPage } from './pages/Common/LandingPage';
 import { RecipesPage } from './pages/Recipes/RecipesPage';
 import { SignUp } from './pages/Auth/SignUp';

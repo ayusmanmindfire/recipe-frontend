@@ -1,6 +1,10 @@
+//React imports
 import React from 'react';
+
+//Third party imports
 import { useFormik } from "formik";
 
+//Function for validating form values
 const validate = (values) => {
     const errors = {};
     if (!values.title) {
@@ -18,7 +22,13 @@ const validate = (values) => {
     return errors;
 };
 
+/**
+ * RecipeForm component allows users to create or update a recipe, including title, ingredients, steps, and image upload.
+ * Utilizes Formik for form state management and validation, enabling dynamic addition/removal of ingredients.
+ * Displays API error messages under the whole form while validation error message under respective input fields.
+ */
 export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) => {
+    //All constants
     const formik = useFormik({
         initialValues,
         validate,
@@ -26,10 +36,13 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
         onSubmit,
     });
 
+    //Utility functions
+    //Function form adding field for adding ingredient
     const addIngredient = () => {
         formik.setFieldValue("ingredients", [...formik.values.ingredients, ""]);
     };
 
+    //Function form removing field for adding ingredient
     const removeIngredient = (index) => {
         const updatedIngredients = formik.values.ingredients.filter(
             (ingredient, i) => i !== index
@@ -58,7 +71,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                     )}
                 </div>
 
-                {/* Ingredients */}
+                {/* Dynamic Ingredients */}
                 <div>
                     <label className="block mb-2 font-semibold text-gray-900 dark:text-white">
                         Ingredients:

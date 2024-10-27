@@ -1,10 +1,15 @@
-import axios from "axios";
-import { Navbar } from "../../components/Navbar"
-import { useFormik } from "formik";
-import { userApi } from "../../utils/apiPaths";
+//React imports
 import { useState } from "react";
+
+//Third party imports
+import axios from "axios";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+
+//Static imports
+import { Navbar } from "../../components/Navbar"
+import { userApi } from "../../utils/apiPaths";
 
 //formik validation function
 const validate=(values)=>{
@@ -24,10 +29,17 @@ const validate=(values)=>{
     return errors;
 }
 
+/** Login component for handling user authentication
+* Renders a form for users to enter their email and password
+* Manages form submission, API interaction, and navigation on successful login*/
 export const Login=()=>{
+    //All states
     const [apiError,setApiError]=useState("");
+
+    //All constants
     const [cookies, setCookie] = useCookies(['user']);
     const navigate=useNavigate();
+    // Interaction with form using formik
     const formik=useFormik({
         initialValues:{
             email:"",
@@ -53,6 +65,7 @@ export const Login=()=>{
             }
         }
     })
+    
     return(
         <>
             <Navbar />

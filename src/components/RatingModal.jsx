@@ -1,9 +1,14 @@
+//React imports
+import React, { useEffect, useState } from 'react';
+
+//Third party imports
 import axios from 'axios';
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { ratingsApi } from '../utils/apiPaths';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+
+//Static imports
+import { ratingsApi } from '../utils/apiPaths';
 
 // Form validation
 const validate = (values) => {
@@ -22,16 +27,20 @@ const validate = (values) => {
     return errors;
 };
 
+/**
+ * RatingModal component provides a form for users to submit a rating (1-5) and feedback for a recipe.
+ * It validates inputs and submits them to the backend, redirecting unauthenticated users to login.
+ * Props: recipeID (string), handleClose (function to close the modal).
+ */
 export const RatingModal = ({ recipeID, handleClose }) => {
+    //All states
+    const [apiError, setApiError] = useState("");
+
+    //All constants
     const [cookies] = useCookies(["user"]);
     const token = cookies.Authorization;
-    const [apiError, setApiError] = useState("")
     const navigate = useNavigate();
-    useEffect(() => {
-        if (!token) {
-            navigate('/login')
-        }
-    })
+    // Initialize Formik with initial values, validation, and submission logic for handling rating submission
     const formik = useFormik({
         initialValues: {
             rating: null,
@@ -56,6 +65,14 @@ export const RatingModal = ({ recipeID, handleClose }) => {
 
         }
     });
+
+    //Use effects
+    //For empty token navigate to login page
+    useEffect(() => {
+        if (!token) {
+            navigate('/login')
+        }
+    })
 
     return (
         <div className="dark:bg-gray-700 dark:text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-lg w-[80%] md:w-[40%]">

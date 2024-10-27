@@ -1,29 +1,39 @@
-import { Navbar } from "../../components/Navbar";
-import { RecipeForm } from "../../components/RecipeForm";
+//React imports
 import { useEffect, useState } from "react";
+
+//Third party imports
 import axios from "axios";
-import { recipesApi } from "../../utils/apiPaths";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+
+//Static imports
+import { Navbar } from "../../components/Navbar";
+import { RecipeForm } from "../../components/RecipeForm";
+import { recipesApi } from "../../utils/apiPaths";
 import eggCooking from "../../assets/eggCooking.jpg";
 
+/* 
+ * AddRecipePage component for creating a new recipe using RecipeForm component
+ * Validates user authorization, provides a form for recipe details, and handles submission to the API
+ * On successful submission, redirects to the recipes page
+ */
 export const AddRecipePage = () => {
+    //All states
     const [apiError, setApiError] = useState("");
+
+    //All constants
     const navigate = useNavigate();
     const [cookies] = useCookies(["user"]);
     const token = cookies.Authorization;
-
     const initialValues = {
         title: "",
         steps: "",
         image: "",
         ingredients: [""],
     };
-    useEffect(()=>{
-        if(!token)
-            navigate('/login')
-    },[])
 
+    //Utility functions
+    //Function for handling form submission
     const handleSubmit = async (values) => {
         try {
             const response = await axios.post(recipesApi.addNewRecipe, values, {
@@ -38,6 +48,13 @@ export const AddRecipePage = () => {
             setApiError(error.response?.data?.message || "Something went wrong");
         }
     };
+
+    //Use effects
+    //For empty token navigate to login page
+    useEffect(()=>{
+        if(!token)
+            navigate('/login')
+    },[])
 
     return (
         <>
