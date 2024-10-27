@@ -1,15 +1,30 @@
+//React imports
 import { useEffect, useState } from 'react';
+
+//Third party imports
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+//Static imports
 import { toggleTheme } from '../redux/themeSlice';
 
+/**
+ * Navbar component for navigating between app sections (Home, Recipes, Profile) and toggling theme.
+ * Responsive design includes a burger menu for mobile view and a desktop menu for larger screens.
+ * Uses `useEffect` to handle theme changes by adding/removing the "dark" class on the root element.
+ */
 export function Navbar() {
+    //All states
     const [isOpen, setIsOpen] = useState(false); // State to handle menu open/close
+
+    //All constants
     const theme = useSelector((state) => state.theme.theme);
     const dispatch=useDispatch();
     const linkStyle = "hover:bg-secondary hover:text-primary dark:hover:text-darkPrimary text-white rounded p-1 font-Rubik";
     const navigate = useNavigate();
 
+    //Use effects
+    // useEffect hook to handle theme changes based on the value of the theme prop
     useEffect(()=>{
         if(theme==="dark")
             document.documentElement.classList.add("dark");

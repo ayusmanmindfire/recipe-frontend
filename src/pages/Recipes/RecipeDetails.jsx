@@ -17,23 +17,48 @@ import { RatingModal } from "../../components/RatingModal";
 import { Ratings } from "../../components/Ratings";
 import SimpleBackdrop from "../../components/Loader";
 
-
-
+/*
+ * RecipeDetails component for displaying individual recipe details
+ * Fetches recipe and rating data based on the recipe ID, verifies user authorization, and allows the recipe creator to edit or delete the recipe
+ * Enables users to view ingredients, steps, and provides options for rating the recipe
+ */
 export const RecipeDetails = () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
-    const [cookies] = useCookies(['user']);
+    //All states
     const [recipeDetails, setRecipeDetails] = useState(null);
     const [ratings, setRatings] = useState(null); // State for rating management
     const [loading, setLoading] = useState(true);
     const [userEmail, setUserEmail] = useState(null); // State for storing user email
     const [openRating, setOpenRating] = useState(false); //state for handling rating form modal
-    const handleOpen = () => setOpenRating(true);
-    const handleClose = () => setOpenRating(false);
 
-    const token = cookies.Authorization;
+    //All constants
+    const [cookies] = useCookies(['user']);
+    const apiUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const { id } = useParams();
+    const token = cookies.Authorization;
 
+    //Utility functions
+    const handleOpen = () => setOpenRating(true);
+    const handleClose = () => setOpenRating(false);
+    // Function to delete recipe
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`${recipesApi.deleteRecipes}${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Send token in header
+                },
+            });
+            navigate('/recipes');
+        } catch (error) {
+            console.error("Failed to delete recipe:", error);
+        }
+    };
+    //function to handle edit recipe
+    const handleEdit = () => {
+        navigate(`/editRecipe/${id}`);
+    }
+
+    //Use effects
     // Fetch user email using the token
     useEffect(() => {
         const verifyUser = async () => {
@@ -81,31 +106,9 @@ export const RecipeDetails = () => {
         fetchRecipeDetails();
     }, [token, id, navigate,openRating]);
 
+    //Loader implementation
     if (loading) {
         return <SimpleBackdrop isLoading={loading}/>;
-    }
-
-    // Function to delete recipe
-    const handleDelete = async () => {
-        try {
-            await axios.delete(`${recipesApi.deleteRecipes}${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`, // Send token in header
-                },
-            });
-            navigate('/recipes');
-        } catch (error) {
-            console.error("Failed to delete recipe:", error);
-        }
-    };
-
-    // Function to handle star (rating) button click
-    // const handleRating = () => {
-    //     navigate(`/rateRecipe/${id}`);
-    // };
-    //function to handle edit recipe
-    const handleEdit = () => {
-        navigate(`/editRecipe/${id}`);
     }
 
     return (

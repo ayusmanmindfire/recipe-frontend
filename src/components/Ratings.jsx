@@ -1,3 +1,7 @@
+/* Ratings component displays a list of ratings with a score, creator name, and optional feedback for each rating
+* Accepts a ratings prop, which is an array of rating objects
+* Each rating object includes: rating, createdBy, feedback
+*/
 export const Ratings = ({ ratings }) => {
     return (
         <>

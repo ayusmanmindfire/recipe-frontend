@@ -1,22 +1,53 @@
+//React imports
 import { useState, useEffect } from "react";
+
+//Third party imports
 import axios from "axios"; // Import axios
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+
+//Static imports
 import { Navbar } from "../../components/Navbar";
 import { RecipeCard } from "../../components/RecipeCard";
 import { recipesApi } from "../../utils/apiPaths";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 import SimpleBackdrop from "../../components/Loader";
+
+//Environment variable
 const apiUrl=process.env.REACT_APP_API_URL;
 
+/*
+ * RecipesPage component for displaying all recipes
+ * Fetches recipes from the API, handles search functionality, and displays a grid of RecipeCards
+ * Allows users to add new recipes and search for specific recipes
+ */
 export const RecipesPage = () => {
+    //All states
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
     const [loading, setLoading] = useState(true); // State to handle loading state
     const [error, setError] = useState(null); // State to handle any error
+
+    //All constants
     const [cookies, setCookie] = useCookies(['user']);
     const [query,setQuery]=useState("")
     const token = cookies.Authorization
     const navigate = useNavigate();
 
+    //Utility functions
+    //function for handling search query
+    const handleSearch=async()=>{
+        try {
+            const response=await axios.get(recipesApi.searchRecipes+query,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setRecipes(response.data.data)
+        } catch (error) {
+            navigate('/error')
+        }
+    }
+    
+    //Use effects
     // Fetch recipes on component mount
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -50,20 +81,6 @@ export const RecipesPage = () => {
 
     if (error) {
         navigate('/error')
-    }
-
-    //function for handling search query
-    const handleSearch=async()=>{
-        try {
-            const response=await axios.get(recipesApi.searchRecipes+query,{
-                headers:{
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            setRecipes(response.data.data)
-        } catch (error) {
-            navigate('/error')
-        }
     }
 
     return (

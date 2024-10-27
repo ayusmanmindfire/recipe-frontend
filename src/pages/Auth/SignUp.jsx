@@ -1,10 +1,16 @@
-import { Navbar } from "../../components/Navbar";
+//React imports
 import React, { useState } from "react";
-import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+
+//Third party imports
 import axios from "axios";
+import { useFormik } from "formik";
+
+//Static imports
+import { Navbar } from "../../components/Navbar";
+import { useNavigate } from "react-router-dom";
 import { userApi } from "../../utils/apiPaths";
 
+//Form validation
 const validate = (values) => {
     const errors = {}; //object of errors for specific fields
     if (!values.username) {
@@ -28,10 +34,17 @@ const validate = (values) => {
     return errors;
 };
 
+/**
+* SignUp component for handling new user registration
+* Renders a form for users to enter registration details
+* Submits data to the API and navigates to login upon successful registration */
 export const SignUp = () => {
+    //All states
     const [apiError, setApiError] = useState(""); // State to store API error messages
-    const navigate = useNavigate();
 
+    //All constants
+    const navigate = useNavigate();
+    //Interaction with form using formik
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -71,6 +84,7 @@ export const SignUp = () => {
                 <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800">
                     <h2 className="text-2xl font-semibold mb-6 text-center dark:text-white">Create an Account</h2>
                     <form onSubmit={formik.handleSubmit} className="space-y-4">
+                        {/* username field*/}
                         <div>
                             <input
                                 type="text"
@@ -85,6 +99,8 @@ export const SignUp = () => {
                                 <div className="text-red-600 mt-1">{formik.errors.username}</div>
                             )}
                         </div>
+                        
+                        {/* email field */}
                         <div>
                             <input
                                 type="email"
@@ -99,6 +115,8 @@ export const SignUp = () => {
                                 <div className="text-red-600 mt-1">{formik.errors.email}</div>
                             )}
                         </div>
+
+                        {/* password field */}
                         <div>
                             <input
                                 type="password"

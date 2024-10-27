@@ -1,13 +1,24 @@
+//React imports
+import { useEffect, useState } from "react";
+
+//Third party imports
+import axios from "axios";
+import { useCookies } from "react-cookie";
+
+//Static imports
 import { Navbar } from "../../components/Navbar";
 import { RecipeForm } from "../../components/RecipeForm";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { recipesApi } from "../../utils/apiPaths";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import smokeImage from "../../assets/smoke.jpg";
 
+/*
+ * EditRecipePage component for editing an existing recipe using recipeForm component
+ * Retrieves recipe details based on recipe ID, pre-populates form with existing data, and handles updates to the API
+ * On successful edit, redirects to the recipes page
+ */
 export const EditRecipePage = () => {
+    //All states
     const [apiError, setApiError] = useState("");
     const [initialValues, setInitialValues] = useState({
         title: "",
@@ -15,38 +26,15 @@ export const EditRecipePage = () => {
         image: "",
         ingredients: [""],
     });
+
+    //All constants
     const { id } = useParams();
     const navigate = useNavigate();
     const [cookies] = useCookies(["user"]);
     const token = cookies.Authorization;
 
-    useEffect(() => {
-        const fetchRecipeDetails = async () => {
-            try {
-                if (!token) {
-                    navigate('/login');
-                    return
-                }
-                const response = await axios.get(`${recipesApi.getRecipeDetails}${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                const recipeData = response.data.data;
-                setInitialValues({
-                    title: recipeData.title,
-                    steps: recipeData.steps,
-                    image: recipeData.image,
-                    ingredients: recipeData.ingredients,
-                });
-            } catch (error) {
-                setApiError("Error fetching recipe details");
-            }
-        };
-
-        fetchRecipeDetails();
-    }, [id, token]);
-
+    //Utility functions
+    //Function to handle submission of form
     const handleSubmit = async (values) => {
         try {
             const response = await axios.put(`${recipesApi.updateRecipe}${id}`, values, {
@@ -61,6 +49,36 @@ export const EditRecipePage = () => {
             setApiError(error.response?.data?.message || "Something went wrong");
         }
     };
+
+    //Use effects
+    useEffect(() => {
+        const fetchRecipeDetails = async () => {
+            try {
+                //For empty token redirect to login page
+                if (!token) {
+                    navigate('/login');
+                    return
+                }
+                const response = await axios.get(`${recipesApi.getRecipeDetails}${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                const recipeData = response.data.data;
+                //Re-populate input fields
+                setInitialValues({
+                    title: recipeData.title,
+                    steps: recipeData.steps,
+                    image: recipeData.image,
+                    ingredients: recipeData.ingredients,
+                });
+            } catch (error) {
+                setApiError("Error fetching recipe details");
+            }
+        };
+
+        fetchRecipeDetails();
+    }, [id, token]);
 
     return (
         <>

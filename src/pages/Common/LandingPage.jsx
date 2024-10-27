@@ -1,9 +1,17 @@
+//Third party imports
+import { useNavigate } from "react-router-dom";
+
+//Static imports
 import { Navbar } from "../../components/Navbar";
 import cookingImage from "../../assets/cooking.jpg";
 import darkCooking from "../../assets/darkCooking.jpg";
 import { CustomButton } from "../../components/CustomButton";
-import { useNavigate } from "react-router-dom";
 
+/* 
+ * LandingPage component for displaying the main introduction and call-to-action buttons
+ * Provides navigation options to sign up or view recipes
+ * Renders different images based on light or dark mode
+ */
 export const LandingPage = () => {
     const navigate = useNavigate();
     return (
