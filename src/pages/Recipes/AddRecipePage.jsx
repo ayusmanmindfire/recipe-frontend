@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 //Static imports
-import { Navbar } from "../../components/Navbar";
 import { RecipeForm } from "../../components/RecipeForm";
 import { recipesApi } from "../../utils/apiPaths";
 import eggCooking from "../../assets/eggCooking.jpg";
@@ -17,7 +16,7 @@ import eggCooking from "../../assets/eggCooking.jpg";
  * Validates user authorization, provides a form for recipe details, and handles submission to the API
  * On successful submission, redirects to the recipes page
  */
-export const AddRecipePage = () => {
+export default function AddRecipePage(){
     //All states
     const [apiError, setApiError] = useState("");
 
@@ -58,7 +57,6 @@ export const AddRecipePage = () => {
 
     return (
         <>
-            <Navbar />
             <div className="dark:bg-gray-800 dark:text-white h-full">
             <div className="container mx-auto py-5">
                 <h2 className="text-2xl font-bold text-center font-Rubik">Add New Recipe</h2>

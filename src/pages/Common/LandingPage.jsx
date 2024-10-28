@@ -2,7 +2,6 @@
 import { useNavigate } from "react-router-dom";
 
 //Static imports
-import { Navbar } from "../../components/Navbar";
 import cookingImage from "../../assets/cooking.jpg";
 import darkCooking from "../../assets/darkCooking.jpg";
 import { CustomButton } from "../../components/CustomButton";
@@ -12,12 +11,10 @@ import { CustomButton } from "../../components/CustomButton";
  * Provides navigation options to sign up or view recipes
  * Renders different images based on light or dark mode
  */
-export const LandingPage = () => {
+export default function LandingPage(){
     const navigate = useNavigate();
     return (
         <>
-            <Navbar />
-
             {/* landing page design */}
             <div className="relative grid grid-cols-1 md:grid-cols-2">
                 {/* left container */}

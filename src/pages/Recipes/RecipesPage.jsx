@@ -7,7 +7,6 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 //Static imports
-import { Navbar } from "../../components/Navbar";
 import { RecipeCard } from "../../components/RecipeCard";
 import { recipesApi } from "../../utils/apiPaths";
 import SimpleBackdrop from "../../components/Loader";
@@ -20,7 +19,7 @@ const apiUrl=process.env.REACT_APP_API_URL;
  * Fetches recipes from the API, handles search functionality, and displays a grid of RecipeCards
  * Allows users to add new recipes and search for specific recipes
  */
-export const RecipesPage = () => {
+export default function RecipesPage() {
     //All states
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
     const [loading, setLoading] = useState(true); // State to handle loading state
@@ -85,7 +84,6 @@ export const RecipesPage = () => {
 
     return (
         <>
-            <Navbar />
             <div className="recipes-page dark:bg-gray-700 p-4 transition-colors duration-200">
                 <div className="flex justify-evenly gap-1  mb-3 h-10">
                     <div className="flex mb-3 h-10 gap-2">

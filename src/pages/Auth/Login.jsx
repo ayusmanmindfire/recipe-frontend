@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 //Static imports
-import { Navbar } from "../../components/Navbar"
 import { userApi } from "../../utils/apiPaths";
 
 //formik validation function
@@ -32,7 +31,7 @@ const validate=(values)=>{
 /** Login component for handling user authentication
 * Renders a form for users to enter their email and password
 * Manages form submission, API interaction, and navigation on successful login*/
-export const Login=()=>{
+export default function Login(){
     //All states
     const [apiError,setApiError]=useState("");
 
@@ -68,7 +67,6 @@ export const Login=()=>{
     
     return(
         <>
-            <Navbar />
             <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100 ">
                  {/*Signup option */}
                  <div className="flex flex-col items-center justify-center space-y-4">
