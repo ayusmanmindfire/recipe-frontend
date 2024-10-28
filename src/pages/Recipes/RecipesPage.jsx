@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { RecipeCard } from "../../components/RecipeCard";
 import { recipesApi } from "../../utils/apiPaths";
 import SimpleBackdrop from "../../components/Loader";
+import { useSelector } from "react-redux";
 
 //Environment variable
 const apiUrl=process.env.REACT_APP_API_URL;
@@ -28,6 +29,8 @@ export default function RecipesPage() {
     //All constants
     const [cookies, setCookie] = useCookies(['user']);
     const [query,setQuery]=useState("")
+    //Details fetching from redux store
+    const userDetails = useSelector((state) => state.user.userDetails);
     const token = cookies.Authorization
     const navigate = useNavigate();
 
@@ -51,7 +54,7 @@ export default function RecipesPage() {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                if (!token) {
+                if (!token||!userDetails) {
                     navigate('/login');
                     return
                 }
