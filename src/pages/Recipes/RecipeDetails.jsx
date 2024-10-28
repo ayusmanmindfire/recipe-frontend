@@ -8,7 +8,6 @@ import { Modal } from "@mui/material";
 import axios from "axios";
 
 // Static imports
-import { Navbar } from "../../components/Navbar";
 import { ratingsApi, recipesApi, userApi } from "../../utils/apiPaths";
 import deleteImage from "../../assets/delete.png";
 import editImage from "../../assets/edit.png";
@@ -22,7 +21,7 @@ import SimpleBackdrop from "../../components/Loader";
  * Fetches recipe and rating data based on the recipe ID, verifies user authorization, and allows the recipe creator to edit or delete the recipe
  * Enables users to view ingredients, steps, and provides options for rating the recipe
  */
-export const RecipeDetails = () => {
+export default function RecipeDetails() {
     //All states
     const [recipeDetails, setRecipeDetails] = useState(null);
     const [ratings, setRatings] = useState(null); // State for rating management
@@ -104,92 +103,91 @@ export const RecipeDetails = () => {
             }
         };
         fetchRecipeDetails();
-    }, [token, id, navigate,openRating]);
+    }, [token, id, navigate, openRating]);
 
     //Loader implementation
     if (loading) {
-        return <SimpleBackdrop isLoading={loading}/>;
+        return <SimpleBackdrop isLoading={loading} />;
     }
 
     return (
         <>
-            <Navbar />
             <div className="dark:bg-gray-800 transition-colors duration-200">
-            <div className="container mx-auto dark:bg-gray-700 dark:text-white p-4 md:p-8">
-                {/* Recipe Details Header */}
-                <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-xl md:text-3xl font-bold">{recipeDetails.title}</h1>
+                <div className="container mx-auto dark:bg-gray-700 dark:text-white p-4 md:p-8">
+                    {/* Recipe Details Header */}
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-xl md:text-3xl font-bold">{recipeDetails.title}</h1>
 
-                    <div className="flex space-x-2">
-                        {/* Star Button */}
-                        <button
-                            onClick={handleOpen}
-                            className="bg-green-400 hover:bg-green-600 text-white px-4 py-2 rounded-full"
-                        >
-                            <img src={starImage} alt="Rate Recipe" className="w-5" />
-                        </button>
+                        <div className="flex space-x-2">
+                            {/* Star Button */}
+                            <button
+                                onClick={handleOpen}
+                                className="bg-green-400 hover:bg-green-600 text-white px-4 py-2 rounded-full"
+                            >
+                                <img src={starImage} alt="Rate Recipe" className="w-5" />
+                            </button>
 
-                        {/* Modal for rating form */}
-                        <Modal
-                            open={openRating}
-                            onClose={handleClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            {/* Component for rating modal */}
-                            <RatingModal recipeID={id} handleClose={handleClose}/> 
-                        </Modal>
+                            {/* Modal for rating form */}
+                            <Modal
+                                open={openRating}
+                                onClose={handleClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                {/* Component for rating modal */}
+                                <RatingModal recipeID={id} handleClose={handleClose} />
+                            </Modal>
 
-                        {userEmail === recipeDetails.createdBy && ( // Conditionally render buttons (which or only enabled for authors of the recipe)
-                            <>
-                                {/* Edit Button */}
-                                <button
-                                    onClick={handleEdit}
-                                    className="bg-blue-400 hover:bg-blue-600 text-white px-4 py-2 rounded-full"
-                                >
-                                    <img src={editImage} alt="Edit Recipe" className="w-5" />
-                                </button>
+                            {userEmail === recipeDetails.createdBy && ( // Conditionally render buttons (which or only enabled for authors of the recipe)
+                                <>
+                                    {/* Edit Button */}
+                                    <button
+                                        onClick={handleEdit}
+                                        className="bg-blue-400 hover:bg-blue-600 text-white px-4 py-2 rounded-full"
+                                    >
+                                        <img src={editImage} alt="Edit Recipe" className="w-5" />
+                                    </button>
 
-                                {/* Delete Button */}
-                                <button
-                                    onClick={handleDelete}
-                                    className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-full"
-                                >
-                                    <img src={deleteImage} alt="Delete Recipe" className="w-5" />
-                                </button>
-                            </>
-                        )}
+                                    {/* Delete Button */}
+                                    <button
+                                        onClick={handleDelete}
+                                        className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-full"
+                                    >
+                                        <img src={deleteImage} alt="Delete Recipe" className="w-5" />
+                                    </button>
+                                </>
+                            )}
+                        </div>
                     </div>
-                </div>
 
-                {/* Recipe Image */}
-                <div className="mb-6">
-                    <img
-                        src={apiUrl + "/" + recipeDetails.image || "https://via.placeholder.com/300"}
-                        alt={recipeDetails.title}
-                        className="w-full h-64 object-cover rounded-lg"
-                    />
-                </div>
-                {/* Ingredients */}
-                <div className="mb-6">
-                    <h2 className="text-2xl font-semibold">Ingredients</h2>
-                    <ul className="list-disc list-inside text-gray-700 mt-2 dark:text-white">
-                        {recipeDetails.ingredients?.map((ingredient, index) => (
-                            <li key={index}>{ingredient}</li>
-                        ))}
-                    </ul>
-                </div>
+                    {/* Recipe Image */}
+                    <div className="mb-6">
+                        <img
+                            src={apiUrl + "/" + recipeDetails.image || "https://via.placeholder.com/300"}
+                            alt={recipeDetails.title}
+                            className="w-full h-64 object-cover rounded-lg"
+                        />
+                    </div>
+                    {/* Ingredients */}
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-semibold">Ingredients</h2>
+                        <ul className="list-disc list-inside text-gray-700 mt-2 dark:text-white">
+                            {recipeDetails.ingredients?.map((ingredient, index) => (
+                                <li key={index}>{ingredient}</li>
+                            ))}
+                        </ul>
+                    </div>
 
-                {/* Recipe Steps */}
-                <div className="mb-6">
-                    <h2 className="text-2xl font-semibold">Steps</h2>
-                    <p className="text-gray-700 mt-2 wrap  dark:text-white">{recipeDetails.steps || "No steps provided."}</p>
-                </div>               
+                    {/* Recipe Steps */}
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-semibold">Steps</h2>
+                        <p className="text-gray-700 mt-2 wrap  dark:text-white">{recipeDetails.steps || "No steps provided."}</p>
+                    </div>
 
-                {/* Ratings */}
-                <Ratings ratings={ratings}/>
+                    {/* Ratings */}
+                    <Ratings ratings={ratings} />
+                </div>
             </div>
-            </div>    
         </>
     );
 };

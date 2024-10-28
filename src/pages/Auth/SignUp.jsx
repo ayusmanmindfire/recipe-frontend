@@ -6,7 +6,6 @@ import axios from "axios";
 import { useFormik } from "formik";
 
 //Static imports
-import { Navbar } from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { userApi } from "../../utils/apiPaths";
 
@@ -38,7 +37,7 @@ const validate = (values) => {
 * SignUp component for handling new user registration
 * Renders a form for users to enter registration details
 * Submits data to the API and navigates to login upon successful registration */
-export const SignUp = () => {
+export default function SignUp() {
     //All states
     const [apiError, setApiError] = useState(""); // State to store API error messages
 
@@ -77,7 +76,6 @@ export const SignUp = () => {
 
     return (
         <>
-            <Navbar />
             <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100">
                 
                 {/* Form Container */}

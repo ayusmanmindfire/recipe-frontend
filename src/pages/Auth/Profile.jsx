@@ -7,7 +7,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 
 //Static imports
-import { Navbar } from "../../components/Navbar"
 import { userApi } from "../../utils/apiPaths";
 import chefImage from "../../assets/chef.jpg"
 import SimpleBackdrop from "../../components/Loader";
@@ -15,7 +14,7 @@ import SimpleBackdrop from "../../components/Loader";
 /** Profile component to display user information after authentication
 * Fetches user details based on a valid token and displays profile data
 * Includes logout functionality to remove authorization token and redirect to login*/
-export const Profile = () => {
+export default function Profile(){
     //All states
     const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true); // State to handle loading state
@@ -57,7 +56,6 @@ export const Profile = () => {
 
     return (
         <>
-            <Navbar />
             {/* Main Container */}
             <div className="min-h-screen dark:bg-gray-700 bg-gray-100 py-10 px-6 flex flex-col items-center transition-colors duration-200">
                 {/* Profile Card */}

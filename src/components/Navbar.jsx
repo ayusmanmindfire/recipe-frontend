@@ -13,7 +13,7 @@ import { toggleTheme } from '../redux/themeSlice';
  * Responsive design includes a burger menu for mobile view and a desktop menu for larger screens.
  * Uses `useEffect` to handle theme changes by adding/removing the "dark" class on the root element.
  */
-export function Navbar() {
+export default function Navbar() {
     //All states
     const [isOpen, setIsOpen] = useState(false); // State to handle menu open/close
 
