@@ -1,3 +1,5 @@
+import { ratingStrings } from "../utils/constantStrings"
+
 /* Ratings component displays a list of ratings with a score, creator name, and optional feedback for each rating
 * Accepts a ratings prop, which is an array of rating objects
 * Each rating object includes: rating, createdBy, feedback
@@ -6,7 +8,7 @@ export const Ratings = ({ ratings }) => {
     return (
         <>
             <div>
-                <h2 className="text-2xl font-semibold mb-2">Ratings</h2>
+                <h2 className="text-2xl font-semibold mb-2">{ratingStrings.ratingCardHeader}</h2>
                 {ratings.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {ratings.map((rating, index) => (
@@ -20,7 +22,7 @@ export const Ratings = ({ ratings }) => {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-gray-600">No ratings yet.</p>
+                    <p className="text-gray-600">{ratingStrings.noRatings}</p>
                 )}
             </div>
         </>

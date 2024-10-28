@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 //Static imports
 import { toggleTheme } from '../redux/themeSlice';
+import { NavbarStrings } from '../utils/constantStrings';
 
 /**
  * Navbar component for navigating between app sections (Home, Recipes, Profile) and toggling theme.
@@ -36,7 +37,7 @@ export default function Navbar() {
         <nav className="bg-primary dark:bg-darkPrimary p-3">
             <div className="flex justify-between items-center">
                 <div className="text-white text-2xl font-bold font-Rubik ">
-                    Delicious Recipes
+                    {NavbarStrings.logo}
                 </div>
                 
                 {/* Burger Menu Icon for Mobile */}
@@ -54,9 +55,9 @@ export default function Navbar() {
                 {/* Desktop Menu */}
                 <div className="hidden md:flex gap-3 items-center">
                     <button className={linkStyle} onClick={() => dispatch(toggleTheme())}>{theme}</button>
-                    <button className={linkStyle} onClick={() => navigate("/")}>Home</button>
-                    <button className={linkStyle} onClick={() => navigate("/recipes")}>Recipes</button>
-                    <button className={linkStyle} onClick={() => navigate("/profile")}>Profile</button>
+                    <button className={linkStyle} onClick={() => navigate("/")}>{NavbarStrings.home}</button>
+                    <button className={linkStyle} onClick={() => navigate("/recipes")}>{NavbarStrings.recipes}</button>
+                    <button className={linkStyle} onClick={() => navigate("/profile")}>{NavbarStrings.profile}</button>
                 </div>
             </div>
 
@@ -69,13 +70,13 @@ export default function Navbar() {
                         }}>{theme}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
-                        navigate("/"); }}>Home</button>
+                        navigate("/"); }}>{NavbarStrings.home}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
-                        navigate("/recipes"); }}>Recipes</button>
+                        navigate("/recipes"); }}>{NavbarStrings.recipes}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
-                        navigate("/profile"); }}>Profile</button>
+                        navigate("/profile"); }}>{NavbarStrings.profile}</button>
                 </div>
             )}
         </nav>

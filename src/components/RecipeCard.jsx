@@ -1,5 +1,6 @@
 //Third party imports
 import { useNavigate } from "react-router-dom";
+import { recipeCardStrings } from "../utils/constantStrings";
 
 /**
  * RecipeCard component displays a overview of a recipe with title, image, limited ingredients, and steps.
@@ -29,7 +30,7 @@ export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
 
             {/* Ingredients */}
             <div className="text-sm text-gray-600 mt-2 dark:text-gray-400">
-                <h3 className="font-semibold">Ingredients:</h3>
+                <h3 className="font-semibold">{recipeCardStrings.ingredientsHeader}</h3>
                 <ul className="list-disc list-inside max-h-20 ">
                     {displayedIngredients && displayedIngredients.length > 0 ? (
                         displayedIngredients.map((ingredient, index) => (
@@ -38,24 +39,24 @@ export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
                             </li>
                         ))
                     ) : (
-                        <li>No ingredients provided</li>
+                        <li>{recipeCardStrings.noIngredients}</li>
                     )}
                 </ul>
                 {hasMoreIngredients && (
                     <span className="text-gray-400 ">
-                        ...more
+                        {recipeCardStrings.more}
                     </span>
                 )}
             </div>
 
             {/* Steps */}
             <div className="text-sm text-gray-600 mt-4 dark:text-gray-400">
-                <h3 className="font-semibold">Steps:</h3>
+                <h3 className="font-semibold">{recipeCardStrings.steps}</h3>
                 <div className="relative max-h-20 overflow-hidden line-clamp-2">
                     <p>{steps || "No steps provided"}</p>
                     {steps && steps.length > 100 && (
                         <span className="text-gray-400">
-                            ...more
+                            {recipeCardStrings.more}
                         </span>
                     )}
                 </div>
@@ -64,7 +65,7 @@ export function RecipeCard({ title, ingredients, steps, imageUrl,id }) {
             {/* Details button */}
             <div className="flex justify-center">
                 <button className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik w-1/2" onClick={()=>{navigate(`/recipes/${id}`)}}>
-                    Details
+                    {recipeCardStrings.detailsButton}
                 </button>
             </div>
         </div>

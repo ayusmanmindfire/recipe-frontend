@@ -14,6 +14,7 @@ import { RatingModal } from "../../components/RatingModal";
 import { Ratings } from "../../components/Ratings";
 import SimpleBackdrop from "../../components/Loader";
 import { imagePaths } from "../../utils/imageImports";
+import { recipeDetailsStrings } from "../../utils/constantStrings";
 
 /*
  * RecipeDetails component for displaying individual recipe details
@@ -31,10 +32,11 @@ export default function RecipeDetails() {
     const [cookies] = useCookies(['user']);
     //Fetching user details from the redux store
     const userResponse= useSelector((state) => state.user.userDetails);
-    const apiUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const { id } = useParams();
     const token = cookies.Authorization;
+    //Environments
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     //Utility functions
     const handleOpen = () => setOpenRating(true);
@@ -153,7 +155,7 @@ export default function RecipeDetails() {
                     </div>
                     {/* Ingredients */}
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold">Ingredients</h2>
+                        <h2 className="text-2xl font-semibold">{recipeDetailsStrings.ingredientsHeader}</h2>
                         <ul className="list-disc list-inside text-gray-700 mt-2 dark:text-white">
                             {recipeDetails.ingredients?.map((ingredient, index) => (
                                 <li key={index}>{ingredient}</li>
@@ -163,7 +165,7 @@ export default function RecipeDetails() {
 
                     {/* Recipe Steps */}
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold">Steps</h2>
+                        <h2 className="text-2xl font-semibold">{recipeDetailsStrings.steps}</h2>
                         <p className="text-gray-700 mt-2 wrap  dark:text-white">{recipeDetails.steps || "No steps provided."}</p>
                     </div>
 

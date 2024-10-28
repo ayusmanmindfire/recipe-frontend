@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 //Static imports
 import { ratingsApi } from '../utils/apiPaths';
+import { ratingStrings } from '../utils/constantStrings';
 
 // Form validation
 const validate = (values) => {
@@ -76,10 +77,10 @@ export const RatingModal = ({ recipeID, handleClose }) => {
 
     return (
         <div className="dark:bg-gray-700 dark:text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-lg w-[80%] md:w-[40%]">
-            <h2 className="text-lg font-bold mb-4">Rate this Recipe</h2>
+            <h2 className="text-lg font-bold mb-4">{ratingStrings.ratingHeader}</h2>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Rating (1-5):</label>
+                    <label className="block text-sm font-medium mb-2">{ratingStrings.ratingField}</label>
                     <input
                         type="number"
                         min="1"
@@ -96,7 +97,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Feedback:</label>
+                    <label className="block text-sm font-medium mb-2">{ratingStrings.feedback}</label>
                     <textarea
                         name="feedback"
                         value={formik.values.feedback}
@@ -115,14 +116,14 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                     type="submit"
                     className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 "
                 >
-                    Submit
+                    {ratingStrings.submitButton}
                 </button>
 
                 <button
                     onClick={handleClose}
                     className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 mx-5"
                 >
-                    Cancel
+                    {ratingStrings.cancelButton}
                 </button>
 
                 {/* API Error Message */}

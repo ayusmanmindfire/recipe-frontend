@@ -1,4 +1,5 @@
 //Static imports
+import { errorStrings } from "../../utils/constantStrings"
 import { imagePaths } from "../../utils/imageImports"
 
 export default function ErrorPage({message}){
@@ -11,7 +12,7 @@ export default function ErrorPage({message}){
                 </div>
                 {/* Specific error message */}
                 <div className="font-Rubik text-5xl text-primary text-center">
-                    Something went wrong
+                    {errorStrings.wentWrong}
                 </div>
             </div>
         </>

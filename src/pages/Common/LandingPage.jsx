@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 //Static imports
 import { CustomButton } from "../../components/CustomButton";
 import { imagePaths } from "../../utils/imageImports";
+import { landingPageStrings } from "../../utils/constantStrings";
 
 /* 
  * LandingPage component for displaying the main introduction and call-to-action buttons
@@ -20,10 +21,10 @@ export default function LandingPage(){
                 <div className="w-full p-10 flex justify-center items-center relative z-10">
                     <div className="block">
                         <div className="font-bold text-4xl font-Rubik text-primary">
-                            Dive into delicious recipes
+                            {landingPageStrings.homeHeader}
                         </div>
                         <div className="font-Rubik dark:text-white">
-                            If you are a chef, no matter how good a chef you are, it's not good cooking for yourself; the joy is in cooking for others.
+                           {landingPageStrings.homeText}
                         </div>
                         <div className="flex gap-2">
                             <CustomButton text="Sign UP" eventFunction={() => { navigate('/signup') }} />
