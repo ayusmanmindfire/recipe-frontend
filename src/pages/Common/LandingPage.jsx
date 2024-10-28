@@ -2,9 +2,8 @@
 import { useNavigate } from "react-router-dom";
 
 //Static imports
-import cookingImage from "../../assets/cooking.jpg";
-import darkCooking from "../../assets/darkCooking.jpg";
 import { CustomButton } from "../../components/CustomButton";
+import { imagePaths } from "../../utils/imageImports";
 
 /* 
  * LandingPage component for displaying the main introduction and call-to-action buttons
@@ -36,12 +35,12 @@ export default function LandingPage(){
                 {/* right container */}
                 <div className="w-full h-screen">
                     {/* Light mode image */}
-                    <img src={cookingImage} alt="cooking light" className="w-full h-full object-cover dark:hidden" />
+                    <img src={imagePaths.cooking} alt="cooking light" className="w-full h-full object-cover dark:hidden" />
 
                     {/* Dark mode image */}
                     <div className="absolute inset-0 w-full h-full">
                         <img
-                            src={darkCooking}
+                            src={imagePaths.darkCooking}
                             alt="cooking dark"
                             className="w-full h-full object-cover hidden dark:block filter"
                         />

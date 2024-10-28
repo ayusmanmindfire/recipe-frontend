@@ -6,11 +6,11 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 
 //Static imports
 import { userApi } from "../../utils/apiPaths";
 import { setUserDetails } from "../../redux/userSlice";
-import { useDispatch } from "react-redux";
 
 //formik validation function
 const validate=(values)=>{

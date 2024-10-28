@@ -1,5 +1,5 @@
 //Static imports
-import errorImage from "../../assets/errorImage.jpg"
+import { imagePaths } from "../../utils/imageImports"
 
 export default function ErrorPage({message}){
     return(
@@ -7,7 +7,7 @@ export default function ErrorPage({message}){
             <div className="h-screen items-center gap-2 bg-[#d7e8f8] p-2 md:flex">
                 {/* Image content */}
                 <div >
-                    <img src={errorImage} alt="" className="md:h-screen"/>
+                    <img src={imagePaths.errorImage} alt="" className="md:h-screen"/>
                 </div>
                 {/* Specific error message */}
                 <div className="font-Rubik text-5xl text-primary text-center">

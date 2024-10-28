@@ -4,9 +4,9 @@ import React, { useState } from "react";
 //Third party imports
 import axios from "axios";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 //Static imports
-import { useNavigate } from "react-router-dom";
 import { userApi } from "../../utils/apiPaths";
 
 //Form validation
