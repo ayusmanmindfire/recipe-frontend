@@ -4,10 +4,11 @@ import React, { useState } from "react";
 //Third party imports
 import axios from "axios";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 //Static imports
-import { useNavigate } from "react-router-dom";
 import { userApi } from "../../utils/apiPaths";
+import { signUpStrings } from "../../utils/constantStrings";
 
 //Form validation
 const validate = (values) => {
@@ -80,7 +81,7 @@ export default function SignUp() {
                 
                 {/* Form Container */}
                 <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800">
-                    <h2 className="text-2xl font-semibold mb-6 text-center dark:text-white">Create an Account</h2>
+                    <h2 className="text-2xl font-semibold mb-6 text-center dark:text-white">{signUpStrings.signUpHeader}</h2>
                     <form onSubmit={formik.handleSubmit} className="space-y-4">
                         {/* username field*/}
                         <div>
@@ -133,7 +134,7 @@ export default function SignUp() {
                         <button
                             type="submit"
                             className="w-full bg-primary hover:bg-hoverPrimary text-white py-3 rounded-lg font-semibold">
-                            Register
+                            {signUpStrings.registerButton}
                         </button>
 
                         {/* API Error Message */}
@@ -147,12 +148,12 @@ export default function SignUp() {
 
                 {/*Login option */}
                 <div className="flex flex-col items-center justify-center space-y-4">
-                    <p className="text-lg dark:text-white">Already have an delicious account?</p>
+                    <p className="text-lg dark:text-white">{signUpStrings.haveAnAccount}</p>
                     <button
                         className="bg-primary hover:bg-hoverPrimary text-white py-3 px-6 rounded-lg font-semibold"
                         onClick={() => navigate('/login')}
                     >
-                        Log in
+                        {signUpStrings.loginButton}
                     </button>
                 </div>
             </div>

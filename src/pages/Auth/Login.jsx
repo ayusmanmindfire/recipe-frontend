@@ -6,11 +6,12 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 
 //Static imports
 import { userApi } from "../../utils/apiPaths";
 import { setUserDetails } from "../../redux/userSlice";
-import { useDispatch } from "react-redux";
+import { loginStrings } from "../../utils/constantStrings";
 
 //formik validation function
 const validate=(values)=>{
@@ -83,17 +84,17 @@ export default function Login(){
             <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100 ">
                  {/*Signup option */}
                  <div className="flex flex-col items-center justify-center space-y-4">
-                    <p className="text-lg dark:text-white">Do not have an account?</p>
+                    <p className="text-lg dark:text-white">{loginStrings.noAccount}</p>
                     <button
                         className="bg-primary hover:bg-hoverPrimary text-white py-3 px-6 rounded-lg font-semibold"
                         onClick={() => navigate('/signup')}
                     >
-                        Sign UP
+                        {loginStrings.signUpButton}
                     </button>
                 </div>
                 {/* Form Container */}
                 <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800">
-                    <h2 className=" dark:text-white text-2xl font-semibold mb-6 text-center">Log-in to your Account</h2>
+                    <h2 className=" dark:text-white text-2xl font-semibold mb-6 text-center">{loginStrings.LoginHeader}</h2>
                     <form onSubmit={formik.handleSubmit} className="space-y-4">
                         
                         <div>
@@ -128,7 +129,7 @@ export default function Login(){
                         <button
                             type="submit"
                             className="w-full bg-primary hover:bg-hoverPrimary text-white py-3 rounded-lg font-semibold">
-                            Log in
+                            {loginStrings.LoginButton}
                         </button>
 
                         {/* API Error Message */}

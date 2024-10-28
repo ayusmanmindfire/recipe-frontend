@@ -1,14 +1,16 @@
 //React imports
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 //Third party imports
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //Static imports
-import chefImage from "../../assets/chef.jpg"
 import SimpleBackdrop from "../../components/Loader";
+import { imagePaths } from "../../utils/imageImports";
+import { clearUserDetails } from "../../redux/userSlice";
+import { profileStrings } from "../../utils/constantStrings";
 
 /** Profile component to display user information after authentication
 * Fetches user details based on a valid token and displays profile data
@@ -22,6 +24,7 @@ export default function Profile(){
     const [cookies, removeCookie] = useCookies(['user']);
     const token = cookies.Authorization
     const navigate = useNavigate();
+    const dispatch=useDispatch();
     //Details fetching from redux store
     const userDetails = useSelector((state) => state.user.userDetails);
 
@@ -57,15 +60,15 @@ export default function Profile(){
             <div className="min-h-screen dark:bg-gray-700 bg-gray-100 py-10 px-6 flex flex-col items-center transition-colors duration-200">
                 {/* Profile Card */}
                 <div className="bg-white p-8 dark:bg-gray-900 dark:text-white rounded-lg shadow-md w-full max-w-md font-Rubik">
-                    <h2 className="text-2xl font-semibold text-center mb-6">User Profile</h2>
+                    <h2 className="text-2xl font-semibold text-center mb-6">{profileStrings.profileHeader}</h2>
                     {/* User Details Section */}
                     <div className="space-y-4 ">
                         <div className="flex justify-between">
-                            <span className="font-medium">Username:</span>
+                            <span className="font-medium">{profileStrings.username}</span>
                             <span>{profileDetails.username}</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="font-medium">Email:</span>
+                            <span className="font-medium">{profileStrings.email}</span>
                             <span>{profileDetails.email}</span>
                         </div>
                     </div>
@@ -73,14 +76,15 @@ export default function Profile(){
                 {/* Profile Image Section (Optional) */}
                 <div className="mt-8 flex flex-col gap-5 items-center">
                     <img
-                        src={chefImage || "https://via.placeholder.com/150"}
+                        src={imagePaths.chef || "https://via.placeholder.com/150"}
                         alt="Profile"
                         className="w-56 h-32 rounded-full shadow-md object-cover"
                     />
                     <button className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-2 py-1 font-Rubik" onClick={() => {
                         removeCookie('Authorization');
+                        dispatch(clearUserDetails());
                         navigate('/login')
-                    }}>Log out</button>
+                    }}>{profileStrings.logout}</button>
                 </div>
             </div>
         </>

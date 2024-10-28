@@ -3,6 +3,7 @@ import React from 'react';
 
 //Third party imports
 import { useFormik } from "formik";
+import { recipeCardStrings, recipeFormStrings } from '../utils/constantStrings';
 
 //Function for validating form values
 const validate = (values) => {
@@ -74,7 +75,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                 {/* Dynamic Ingredients */}
                 <div>
                     <label className="block mb-2 font-semibold text-gray-900 dark:text-white">
-                        Ingredients:
+                        {recipeCardStrings.ingredientsHeader}
                     </label>
                     {formik.values.ingredients.map((ingredient, index) => (
                         <div key={index} className="flex space-x-2 mb-2">
@@ -94,7 +95,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                                 className="bg-red-500 hover:bg-red-600 text-white px-3 rounded-lg text-sm
                                          dark:bg-red-600 dark:hover:bg-red-700"
                             >
-                                Remove
+                                {recipeFormStrings.removeButton}
                             </button>
                         </div>
                     ))}
@@ -104,7 +105,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                         className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-lg text-sm
                                  dark:bg-green-600 dark:hover:bg-green-700"
                     >
-                        Add ingredient
+                        {recipeFormStrings.addButton}
                     </button>
                     {formik.errors.ingredients && (
                         <div className="text-red-600 dark:text-red-400 mt-1">

@@ -6,16 +6,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Modal } from "@mui/material";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 // Static imports
-import { ratingsApi, recipesApi, userApi } from "../../utils/apiPaths";
-import deleteImage from "../../assets/delete.png";
-import editImage from "../../assets/edit.png";
-import starImage from "../../assets/star.png";
+import { ratingsApi, recipesApi } from "../../utils/apiPaths";
 import { RatingModal } from "../../components/RatingModal";
 import { Ratings } from "../../components/Ratings";
 import SimpleBackdrop from "../../components/Loader";
-import { useSelector } from "react-redux";
+import { imagePaths } from "../../utils/imageImports";
+import { recipeDetailsStrings } from "../../utils/constantStrings";
 
 /*
  * RecipeDetails component for displaying individual recipe details
@@ -33,10 +32,11 @@ export default function RecipeDetails() {
     const [cookies] = useCookies(['user']);
     //Fetching user details from the redux store
     const userResponse= useSelector((state) => state.user.userDetails);
-    const apiUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const { id } = useParams();
     const token = cookies.Authorization;
+    //Environments
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     //Utility functions
     const handleOpen = () => setOpenRating(true);
@@ -109,7 +109,7 @@ export default function RecipeDetails() {
                                 onClick={handleOpen}
                                 className="bg-green-400 hover:bg-green-600 text-white px-4 py-2 rounded-full"
                             >
-                                <img src={starImage} alt="Rate Recipe" className="w-5" />
+                                <img src={imagePaths.starIcon} alt="Rate Recipe" className="w-5" />
                             </button>
 
                             {/* Modal for rating form */}
@@ -130,7 +130,7 @@ export default function RecipeDetails() {
                                         onClick={handleEdit}
                                         className="bg-blue-400 hover:bg-blue-600 text-white px-4 py-2 rounded-full"
                                     >
-                                        <img src={editImage} alt="Edit Recipe" className="w-5" />
+                                        <img src={imagePaths.editIcon} alt="Edit Recipe" className="w-5" />
                                     </button>
 
                                     {/* Delete Button */}
@@ -138,7 +138,7 @@ export default function RecipeDetails() {
                                         onClick={handleDelete}
                                         className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-full"
                                     >
-                                        <img src={deleteImage} alt="Delete Recipe" className="w-5" />
+                                        <img src={imagePaths.deleteIcon} alt="Delete Recipe" className="w-5" />
                                     </button>
                                 </>
                             )}
@@ -155,7 +155,7 @@ export default function RecipeDetails() {
                     </div>
                     {/* Ingredients */}
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold">Ingredients</h2>
+                        <h2 className="text-2xl font-semibold">{recipeDetailsStrings.ingredientsHeader}</h2>
                         <ul className="list-disc list-inside text-gray-700 mt-2 dark:text-white">
                             {recipeDetails.ingredients?.map((ingredient, index) => (
                                 <li key={index}>{ingredient}</li>
@@ -165,7 +165,7 @@ export default function RecipeDetails() {
 
                     {/* Recipe Steps */}
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold">Steps</h2>
+                        <h2 className="text-2xl font-semibold">{recipeDetailsStrings.steps}</h2>
                         <p className="text-gray-700 mt-2 wrap  dark:text-white">{recipeDetails.steps || "No steps provided."}</p>
                     </div>
 

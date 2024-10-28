@@ -11,15 +11,21 @@ const userSlice=createSlice({
     initialState,
     reducers:{
         setUserDetails: (state, action) => {
-            console.log(action.payload)
             // Set user details when logged in
             state.userDetails = action.payload;
+        },
+        
+        //Removal of user details on logout
+        clearUserDetails: (state) => {
+            // Reset the entire state to initial values on logout
+            state.userDetails = null;
+            state.isAuthenticated = false;
         }
     }
 
 })
 
-export const { setUserDetails } = userSlice.actions;
+export const { setUserDetails,clearUserDetails } = userSlice.actions;
 
 // Export the reducer
 export default userSlice.reducer;

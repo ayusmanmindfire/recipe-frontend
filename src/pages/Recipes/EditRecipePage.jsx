@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 //Third party imports
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useNavigate, useParams } from "react-router-dom";
 
 //Static imports
 import { RecipeForm } from "../../components/RecipeForm";
 import { recipesApi } from "../../utils/apiPaths";
-import { useNavigate, useParams } from "react-router-dom";
-import smokeImage from "../../assets/smoke.jpg";
+import { imagePaths } from "../../utils/imageImports";
+import { editRecipeStrings } from "../../utils/constantStrings";
 
 /*
  * EditRecipePage component for editing an existing recipe using recipeForm component
@@ -83,8 +84,8 @@ export default function EditRecipePage() {
         <>
             <div className="dark:bg-gray-800 dark:text-white">
                 <div className="container mx-auto p-8 ">
-                    <h2 className="text-2xl font-bold text-center font-Rubik mb-6">Edit Recipe</h2>
-                    <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={smokeImage} />
+                    <h2 className="text-2xl font-bold text-center font-Rubik mb-6">{editRecipeStrings.editRecipe}</h2>
+                    <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={imagePaths.smoke} />
                 </div>
             </div>
         </>

@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import axios from "axios"; // Import axios
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //Static imports
 import { RecipeCard } from "../../components/RecipeCard";
 import { recipesApi } from "../../utils/apiPaths";
 import SimpleBackdrop from "../../components/Loader";
-import { useSelector } from "react-redux";
+import { recipesPageStrings } from "../../utils/constantStrings";
 
 //Environment variable
 const apiUrl=process.env.REACT_APP_API_URL;
@@ -91,16 +92,16 @@ export default function RecipesPage() {
                 <div className="flex justify-evenly gap-1  mb-3 h-10">
                     <div className="flex mb-3 h-10 gap-2">
                         <input type="text" value={query} onChange={(e)=>{setQuery(e.target.value)}} placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />
-                        <button onClick={handleSearch} className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik">Search</button>
+                        <button onClick={handleSearch} className="bg-contrastButton hover:bg-hoverContrastButton hover:text-white rounded-lg px-2 py-1 font-Rubik">{recipesPageStrings.searchButton}</button>
                     </div>
                     <div>
                         <button className="hidden sm:flex bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 font-Rubik" onClick={()=>{
                             navigate('/addRecipe')
-                        }}>Add recipe</button>
+                        }}>{recipesPageStrings.addRecipeButton}</button>
                         {/* Responsive button */}
                         <button className="sm:hidden bg-green-500 hover:bg-green-600 text-white rounded-2xl p-2 px-4 font-bold font-Rubik" onClick={()=>{
                             navigate('/addRecipe')
-                        }}>+</button>
+                        }}>{recipesPageStrings.addRecipeResponsive}</button>
                     </div>
 
                 </div>
@@ -120,7 +121,7 @@ export default function RecipesPage() {
                             />
                         ))
                     ) : (
-                        <div>No recipes found</div>
+                        <div>{recipesPageStrings.noRecipes}</div>
                     )}
                 </div>
             </div>
