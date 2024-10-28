@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 
 //Third party imports
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import { useSelector } from "react-redux";
 
 //Static imports
-import { userApi } from "../../utils/apiPaths";
 import chefImage from "../../assets/chef.jpg"
 import SimpleBackdrop from "../../components/Loader";
 
@@ -16,29 +15,27 @@ import SimpleBackdrop from "../../components/Loader";
 * Includes logout functionality to remove authorization token and redirect to login*/
 export default function Profile(){
     //All states
-    const [userDetails, setUserDetails] = useState(null);
+    const [profileDetails, setProfileDetails] = useState(null);
     const [loading, setLoading] = useState(true); // State to handle loading state
 
     //All constants
     const [cookies, removeCookie] = useCookies(['user']);
     const token = cookies.Authorization
     const navigate = useNavigate();
+    //Details fetching from redux store
+    const userDetails = useSelector((state) => state.user.userDetails);
 
     //Use effects
     //fetch user details using token verification
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                if (!token) {
+                if (!token||!userDetails) {
                     navigate('/login')
                     return
                 }
-                const userResponse = await axios.get(userApi.verifyTokenUser, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                })
-                setUserDetails(userResponse.data.data);
+                //Setting the fetched data from redux store to current state
+                setProfileDetails(userDetails);
 
             } catch (error) {
                 navigate('/error')
@@ -65,11 +62,11 @@ export default function Profile(){
                     <div className="space-y-4 ">
                         <div className="flex justify-between">
                             <span className="font-medium">Username:</span>
-                            <span>{userDetails.username}</span>
+                            <span>{profileDetails.username}</span>
                         </div>
                         <div className="flex justify-between">
                             <span className="font-medium">Email:</span>
-                            <span>{userDetails.email}</span>
+                            <span>{profileDetails.email}</span>
                         </div>
                     </div>
                 </div>

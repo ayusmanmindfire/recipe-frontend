@@ -15,6 +15,7 @@ import starImage from "../../assets/star.png";
 import { RatingModal } from "../../components/RatingModal";
 import { Ratings } from "../../components/Ratings";
 import SimpleBackdrop from "../../components/Loader";
+import { useSelector } from "react-redux";
 
 /*
  * RecipeDetails component for displaying individual recipe details
@@ -26,11 +27,12 @@ export default function RecipeDetails() {
     const [recipeDetails, setRecipeDetails] = useState(null);
     const [ratings, setRatings] = useState(null); // State for rating management
     const [loading, setLoading] = useState(true);
-    const [userEmail, setUserEmail] = useState(null); // State for storing user email
     const [openRating, setOpenRating] = useState(false); //state for handling rating form modal
 
     //All constants
     const [cookies] = useCookies(['user']);
+    //Fetching user details from the redux store
+    const userResponse= useSelector((state) => state.user.userDetails);
     const apiUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const { id } = useParams();
@@ -57,32 +59,15 @@ export default function RecipeDetails() {
         navigate(`/editRecipe/${id}`);
     }
 
-    //Use effects
-    // Fetch user email using the token
-    useEffect(() => {
-        const verifyUser = async () => {
-            try {
-                const userResponse = await axios.get(userApi.verifyTokenUser, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                });
-                setUserEmail(userResponse.data.data.email); // Set user email
-            } catch (error) {
-                navigate('/login');
-            }
-        };
-        verifyUser();
-    }, [token, navigate]);
-
     // Fetch recipe details
     useEffect(() => {
         const fetchRecipeDetails = async () => {
             try {
-                if (!token) {
+                if (!token||!userResponse) {
                     navigate('/login');
                     return;
                 }
+
                 const recipeResponse = await axios.get(`${recipesApi.getRecipeDetails}${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Send token in header
@@ -138,7 +123,7 @@ export default function RecipeDetails() {
                                 <RatingModal recipeID={id} handleClose={handleClose} />
                             </Modal>
 
-                            {userEmail === recipeDetails.createdBy && ( // Conditionally render buttons (which or only enabled for authors of the recipe)
+                            {userResponse.email === recipeDetails.createdBy && ( // Conditionally render buttons (which or only enabled for authors of the recipe)
                                 <>
                                     {/* Edit Button */}
                                     <button

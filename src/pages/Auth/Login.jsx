@@ -9,6 +9,8 @@ import { useCookies } from "react-cookie";
 
 //Static imports
 import { userApi } from "../../utils/apiPaths";
+import { setUserDetails } from "../../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 //formik validation function
 const validate=(values)=>{
@@ -38,6 +40,7 @@ export default function Login(){
     //All constants
     const [cookies, setCookie] = useCookies(['user']);
     const navigate=useNavigate();
+    const dispatch=useDispatch();
     // Interaction with form using formik
     const formik=useFormik({
         initialValues:{
@@ -52,9 +55,19 @@ export default function Login(){
                         "Content-Type":"Application/json"
                     }
                 })
-                console.log(response.data)
-                setCookie("Authorization",response.data.data)
+                const token=response.data.data;
+                setCookie("Authorization",token)
                 setApiError("");
+
+                //Storing user details to the redux                
+                const userResponse = await axios.get(userApi.verifyTokenUser, {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Send token in header
+                    },
+                });
+                dispatch(setUserDetails(userResponse.data.data));
+                
+                //Navigate to the all recipes page
                 navigate('/recipes');
             } catch (error) {
                 if(error.response)
