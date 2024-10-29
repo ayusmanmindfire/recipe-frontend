@@ -2,13 +2,12 @@
 import React, { useState } from "react";
 
 //Third party imports
-import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
 //Static imports
-import { userApi } from "../../utils/apiPaths";
 import { signUpStrings } from "../../utils/constantStrings";
+import { registerUser } from "../../services/auth";
 
 //Form validation
 const validate = (values) => {
@@ -55,11 +54,7 @@ export default function SignUp() {
         onSubmit: async (values) => {
             try {
                 //POST api call with values as the payload
-                const response = await axios.post(userApi.registerUser, values, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                const response = await registerUser(values);
                 // console.log("Registration successful:", response.data);
                 setApiError("");
                 navigate('/login'); //On successful registration navigate to login

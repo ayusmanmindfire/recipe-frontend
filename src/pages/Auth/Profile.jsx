@@ -17,7 +17,7 @@ import { profileStrings } from "../../utils/constantStrings";
 * Includes logout functionality to remove authorization token and redirect to login*/
 export default function Profile(){
     //All states
-    const [profileDetails, setProfileDetails] = useState(null);
+    const [profileDetails, setProfileDetails] = useState({username:"",email:""});
     const [loading, setLoading] = useState(true); // State to handle loading state
 
     //All constants
@@ -65,11 +65,11 @@ export default function Profile(){
                     <div className="space-y-4 ">
                         <div className="flex justify-between">
                             <span className="font-medium">{profileStrings.username}</span>
-                            <span>{profileDetails.username}</span>
+                            <span>{profileDetails?.username}</span>
                         </div>
                         <div className="flex justify-between">
                             <span className="font-medium">{profileStrings.email}</span>
-                            <span>{profileDetails.email}</span>
+                            <span>{profileDetails?.email}</span>
                         </div>
                     </div>
                 </div>

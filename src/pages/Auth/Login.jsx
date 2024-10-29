@@ -2,16 +2,15 @@
 import { useState } from "react";
 
 //Third party imports
-import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 
 //Static imports
-import { userApi } from "../../utils/apiPaths";
 import { setUserDetails } from "../../redux/userSlice";
 import { loginStrings } from "../../utils/constantStrings";
+import { userLogin, verifyToken } from "../../services/auth";
 
 //formik validation function
 const validate=(values)=>{
@@ -51,21 +50,13 @@ export default function Login(){
         validate,
         onSubmit:async(values)=>{
             try {
-                const response=await axios.post(userApi.loginUser,values,{
-                    headers:{
-                        "Content-Type":"Application/json"
-                    }
-                })
+                const response=await userLogin(values)
                 const token=response.data.data;
                 setCookie("Authorization",token)
                 setApiError("");
 
-                //Storing user details to the redux                
-                const userResponse = await axios.get(userApi.verifyTokenUser, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                });
+                //Storing user details to the redux                 
+                const userResponse = await verifyToken(token);
                 dispatch(setUserDetails(userResponse.data.data));
                 
                 //Navigate to the all recipes page
