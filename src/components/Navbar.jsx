@@ -1,5 +1,5 @@
 //React imports
-import { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 
 //Third party imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,6 +43,7 @@ export default function Navbar() {
                 {/* Burger Menu Icon for Mobile */}
                 <div className="md:hidden">
                     <button
+                        data-testid="menu"
                         onClick={() => setIsOpen(!isOpen)}
                         className="text-white focus:outline-none"
                     >
