@@ -2,16 +2,15 @@
 import { useState, useEffect } from "react";
 
 //Third party imports
-import axios from "axios"; // Import axios
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //Static imports
 import { RecipeCard } from "../../components/RecipeCard";
-import { recipesApi } from "../../utils/apiPaths";
 import SimpleBackdrop from "../../components/Loader";
 import { recipesPageStrings } from "../../utils/constantStrings";
+import { getAllRecipe, searchRecipes } from "../../services/recipes";
 
 //Environment variable
 const apiUrl=process.env.REACT_APP_API_URL;
@@ -39,11 +38,7 @@ export default function RecipesPage() {
     //function for handling search query
     const handleSearch=async()=>{
         try {
-            const response=await axios.get(recipesApi.searchRecipes+query,{
-                headers:{
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const response=await searchRecipes(query,token);
             setRecipes(response.data.data)
         } catch (error) {
             navigate('/error')
@@ -59,11 +54,7 @@ export default function RecipesPage() {
                     navigate('/login');
                     return
                 }
-                const response = await axios.get(recipesApi.getAllRecipes, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                });
+                const response = await getAllRecipe(token)
                 setRecipes(response.data.data);
             } catch (error) {
                 if (error.response && error.response.status === 401)

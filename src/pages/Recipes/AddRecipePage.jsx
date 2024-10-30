@@ -2,15 +2,14 @@
 import { useEffect, useState } from "react";
 
 //Third party imports
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 //Static imports
 import { RecipeForm } from "../../components/RecipeForm";
-import { recipesApi } from "../../utils/apiPaths";
 import { imagePaths } from "../../utils/imageImports";
 import { addRecipeStrings } from "../../utils/constantStrings";
+import { addRecipe } from "../../services/recipes";
 
 /* 
  * AddRecipePage component for creating a new recipe using RecipeForm component
@@ -36,12 +35,7 @@ export default function AddRecipePage(){
     //Function for handling form submission
     const handleSubmit = async (values) => {
         try {
-            const response = await axios.post(recipesApi.addNewRecipe, values, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            const response = await addRecipe(token,values)
             setApiError("");
             navigate("/recipes");
         } catch (error) {
