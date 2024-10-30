@@ -1,6 +1,11 @@
+//React imports
 import React from 'react';
-import { useFormik } from "formik";
 
+//Third party imports
+import { useFormik } from "formik";
+import { recipeCardStrings, recipeFormStrings } from '../utils/constantStrings';
+
+//Function for validating form values
 const validate = (values) => {
     const errors = {};
     if (!values.title) {
@@ -18,7 +23,13 @@ const validate = (values) => {
     return errors;
 };
 
+/**
+ * RecipeForm component allows users to create or update a recipe, including title, ingredients, steps, and image upload.
+ * Utilizes Formik for form state management and validation, enabling dynamic addition/removal of ingredients.
+ * Displays API error messages under the whole form while validation error message under respective input fields.
+ */
 export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) => {
+    //All constants
     const formik = useFormik({
         initialValues,
         validate,
@@ -26,10 +37,13 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
         onSubmit,
     });
 
+    //Utility functions
+    //Function form adding field for adding ingredient
     const addIngredient = () => {
         formik.setFieldValue("ingredients", [...formik.values.ingredients, ""]);
     };
 
+    //Function form removing field for adding ingredient
     const removeIngredient = (index) => {
         const updatedIngredients = formik.values.ingredients.filter(
             (ingredient, i) => i !== index
@@ -38,7 +52,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
     };
 
     return (
-        <div className="grid grid-cols-1 p-5 gap-5 md:h-screen md:grid-cols-2 font-Rubik bg-white dark:bg-gray-800 transition-colors duration-200">
+        <div className="grid grid-cols-1 p-5 gap-5 dark:h-full md:h-screen md:grid-cols-2 font-Rubik bg-white dark:bg-gray-800 transition-colors duration-200">
             <form onSubmit={formik.handleSubmit} className="dark:bg-gray-800 space-y-4">
                 {/* Title */}
                 <div>
@@ -58,10 +72,10 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                     )}
                 </div>
 
-                {/* Ingredients */}
+                {/* Dynamic Ingredients */}
                 <div>
                     <label className="block mb-2 font-semibold text-gray-900 dark:text-white">
-                        Ingredients:
+                        {recipeCardStrings.ingredientsHeader}
                     </label>
                     {formik.values.ingredients.map((ingredient, index) => (
                         <div key={index} className="flex space-x-2 mb-2">
@@ -81,7 +95,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                                 className="bg-red-500 hover:bg-red-600 text-white px-3 rounded-lg text-sm
                                          dark:bg-red-600 dark:hover:bg-red-700"
                             >
-                                Remove
+                                {recipeFormStrings.removeButton}
                             </button>
                         </div>
                     ))}
@@ -91,7 +105,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                         className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-lg text-sm
                                  dark:bg-green-600 dark:hover:bg-green-700"
                     >
-                        Add ingredient
+                        {recipeFormStrings.addButton}
                     </button>
                     {formik.errors.ingredients && (
                         <div className="text-red-600 dark:text-red-400 mt-1">
@@ -120,6 +134,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                 {/* Image File Upload */}
                 <div>
                     <input
+                        data-testid="image-upload"
                         type="file"
                         name="image"
                         onChange={(e) => formik.setFieldValue("image", e.target.files[0])}

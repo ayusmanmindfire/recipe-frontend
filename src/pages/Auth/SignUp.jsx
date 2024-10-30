@@ -1,10 +1,15 @@
-import { Navbar } from "../../components/Navbar";
+//React imports
 import React, { useState } from "react";
+
+//Third party imports
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { userApi } from "../../utils/apiPaths";
 
+//Static imports
+import { signUpStrings } from "../../utils/constantStrings";
+import { registerUser } from "../../services/auth";
+
+//Form validation
 const validate = (values) => {
     const errors = {}; //object of errors for specific fields
     if (!values.username) {
@@ -28,10 +33,17 @@ const validate = (values) => {
     return errors;
 };
 
-export const SignUp = () => {
+/**
+* SignUp component for handling new user registration
+* Renders a form for users to enter registration details
+* Submits data to the API and navigates to login upon successful registration */
+export default function SignUp() {
+    //All states
     const [apiError, setApiError] = useState(""); // State to store API error messages
-    const navigate = useNavigate();
 
+    //All constants
+    const navigate = useNavigate();
+    //Interaction with form using formik
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -42,11 +54,7 @@ export const SignUp = () => {
         onSubmit: async (values) => {
             try {
                 //POST api call with values as the payload
-                const response = await axios.post(userApi.registerUser, values, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                const response = await registerUser(values);
                 // console.log("Registration successful:", response.data);
                 setApiError("");
                 navigate('/login'); //On successful registration navigate to login
@@ -64,13 +72,13 @@ export const SignUp = () => {
 
     return (
         <>
-            <Navbar />
             <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100">
                 
                 {/* Form Container */}
                 <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800">
-                    <h2 className="text-2xl font-semibold mb-6 text-center dark:text-white">Create an Account</h2>
+                    <h2 className="text-2xl font-semibold mb-6 text-center dark:text-white">{signUpStrings.signUpHeader}</h2>
                     <form onSubmit={formik.handleSubmit} className="space-y-4">
+                        {/* username field*/}
                         <div>
                             <input
                                 type="text"
@@ -85,6 +93,8 @@ export const SignUp = () => {
                                 <div className="text-red-600 mt-1">{formik.errors.username}</div>
                             )}
                         </div>
+                        
+                        {/* email field */}
                         <div>
                             <input
                                 type="email"
@@ -99,6 +109,8 @@ export const SignUp = () => {
                                 <div className="text-red-600 mt-1">{formik.errors.email}</div>
                             )}
                         </div>
+
+                        {/* password field */}
                         <div>
                             <input
                                 type="password"
@@ -117,7 +129,7 @@ export const SignUp = () => {
                         <button
                             type="submit"
                             className="w-full bg-primary hover:bg-hoverPrimary text-white py-3 rounded-lg font-semibold">
-                            Register
+                            {signUpStrings.registerButton}
                         </button>
 
                         {/* API Error Message */}
@@ -131,12 +143,12 @@ export const SignUp = () => {
 
                 {/*Login option */}
                 <div className="flex flex-col items-center justify-center space-y-4">
-                    <p className="text-lg dark:text-white">Already have an delicious account?</p>
+                    <p className="text-lg dark:text-white">{signUpStrings.haveAnAccount}</p>
                     <button
                         className="bg-primary hover:bg-hoverPrimary text-white py-3 px-6 rounded-lg font-semibold"
                         onClick={() => navigate('/login')}
                     >
-                        Log in
+                        {signUpStrings.loginButton}
                     </button>
                 </div>
             </div>

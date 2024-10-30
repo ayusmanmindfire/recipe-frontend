@@ -1,9 +1,14 @@
-import axios from 'axios';
-import { useFormik } from 'formik';
+//React imports
 import React, { useEffect, useState } from 'react';
-import { ratingsApi } from '../utils/apiPaths';
+
+//Third party imports
+import { useFormik } from 'formik';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+
+//Static imports
+import { ratingStrings } from '../utils/constantStrings';
+import { addRating } from '../services/rating';
 
 // Form validation
 const validate = (values) => {
@@ -22,16 +27,20 @@ const validate = (values) => {
     return errors;
 };
 
+/**
+ * RatingModal component provides a form for users to submit a rating (1-5) and feedback for a recipe.
+ * It validates inputs and submits them to the backend, redirecting unauthenticated users to login.
+ * Props: recipeID (string), handleClose (function to close the modal).
+ */
 export const RatingModal = ({ recipeID, handleClose }) => {
+    //All states
+    const [apiError, setApiError] = useState("");
+
+    //All constants
     const [cookies] = useCookies(["user"]);
     const token = cookies.Authorization;
-    const [apiError, setApiError] = useState("")
     const navigate = useNavigate();
-    useEffect(() => {
-        if (!token) {
-            navigate('/login')
-        }
-    })
+    // Initialize Formik with initial values, validation, and submission logic for handling rating submission
     const formik = useFormik({
         initialValues: {
             rating: null,
@@ -40,11 +49,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
         validate,
         onSubmit: async (values) => {
             try {
-                const response = await axios.post(ratingsApi.addRatings + recipeID, values, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    }
-                })
+                const response = await addRating(token,values,recipeID)
                 handleClose();
 
             } catch (error) {
@@ -57,12 +62,20 @@ export const RatingModal = ({ recipeID, handleClose }) => {
         }
     });
 
+    //Use effects
+    //For empty token navigate to login page
+    useEffect(() => {
+        if (!token) {
+            navigate('/login')
+        }
+    })
+
     return (
         <div className="dark:bg-gray-700 dark:text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-lg w-[80%] md:w-[40%]">
-            <h2 className="text-lg font-bold mb-4">Rate this Recipe</h2>
+            <h2 className="text-lg font-bold mb-4">{ratingStrings.ratingHeader}</h2>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Rating (1-5):</label>
+                    <label className="block text-sm font-medium mb-2">{ratingStrings.ratingField}</label>
                     <input
                         type="number"
                         min="1"
@@ -79,7 +92,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Feedback:</label>
+                    <label className="block text-sm font-medium mb-2">{ratingStrings.feedback}</label>
                     <textarea
                         name="feedback"
                         value={formik.values.feedback}
@@ -98,14 +111,14 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                     type="submit"
                     className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 "
                 >
-                    Submit
+                    {ratingStrings.submitButton}
                 </button>
 
                 <button
                     onClick={handleClose}
                     className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 mx-5"
                 >
-                    Cancel
+                    {ratingStrings.cancelButton}
                 </button>
 
                 {/* API Error Message */}

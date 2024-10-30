@@ -1,80 +1,93 @@
-import { useNavigate } from "react-router-dom";
-import { Navbar } from "../../components/Navbar"
-import { useCookies } from "react-cookie";
+//React imports
 import { useEffect, useState } from "react";
-import { userApi } from "../../utils/apiPaths";
-import axios from "axios";
-import chefImage from "../../assets/chef.jpg"
-import SimpleBackdrop from "../../components/Loader";
 
-export const Profile=()=>{
-    const [cookies,removeCookie] = useCookies(['user']);
-    const [userDetails,setUserDetails]=useState(null);
+//Third party imports
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+
+//Static imports
+import SimpleBackdrop from "../../components/Loader";
+import { imagePaths } from "../../utils/imageImports";
+import { clearUserDetails } from "../../redux/userSlice";
+import { profileStrings } from "../../utils/constantStrings";
+
+/** Profile component to display user information after authentication
+* Fetches user details based on a valid token and displays profile data
+* Includes logout functionality to remove authorization token and redirect to login*/
+export default function Profile(){
+    //All states
+    const [profileDetails, setProfileDetails] = useState({username:"",email:""});
     const [loading, setLoading] = useState(true); // State to handle loading state
+
+    //All constants
+    const [cookies, removeCookie] = useCookies(['user']);
     const token = cookies.Authorization
     const navigate = useNavigate();
+    const dispatch=useDispatch();
+    //Details fetching from redux store
+    const userDetails = useSelector((state) => state.user.userDetails);
 
+    //Use effects
     //fetch user details using token verification
-    useEffect(()=>{
-        const fetchUserData=async()=>{
+    useEffect(() => {
+        const fetchUserData = async () => {
             try {
-                if(!token){
+                if (!token||!userDetails) {
                     navigate('/login')
                     return
                 }
-                const userResponse=await axios.get(userApi.verifyTokenUser,{
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                })
-                setUserDetails(userResponse.data.data);
-    
+                //Setting the fetched data from redux store to current state
+                setProfileDetails(userDetails);
+
             } catch (error) {
                 navigate('/error')
-            }finally {
+            } finally {
                 setLoading(false);
             }
         }
         fetchUserData();
-    },[]);
+    }, []);
 
+    //Loader implementation
     if (loading) {
-        return <SimpleBackdrop isLoading={loading}/>;
+        return <SimpleBackdrop isLoading={loading} />;
     }
-    return(
+
+    return (
         <>
-    <Navbar />
-    {/* Main Container */}
-    <div className="min-h-screen dark:bg-gray-700 bg-gray-100 py-10 px-6 flex flex-col items-center transition-colors duration-200">
-        {/* Profile Card */}
-        <div className="bg-white p-8 dark:bg-gray-900 dark:text-white rounded-lg shadow-md w-full max-w-md font-Rubik">
-            <h2 className="text-2xl font-semibold text-center mb-6">User Profile</h2>
-            {/* User Details Section */}
-            <div className="space-y-4 ">
-                <div className="flex justify-between">
-                    <span className="font-medium">Username:</span>
-                    <span>{userDetails.username}</span>
+            {/* Main Container */}
+            <div className="min-h-screen dark:bg-gray-700 bg-gray-100 py-10 px-6 flex flex-col items-center transition-colors duration-200">
+                {/* Profile Card */}
+                <div className="bg-white p-8 dark:bg-gray-900 dark:text-white rounded-lg shadow-md w-full max-w-md font-Rubik">
+                    <h2 className="text-2xl font-semibold text-center mb-6">{profileStrings.profileHeader}</h2>
+                    {/* User Details Section */}
+                    <div className="space-y-4 ">
+                        <div className="flex justify-between">
+                            <span className="font-medium">{profileStrings.username}</span>
+                            <span>{profileDetails?.username}</span>
+                        </div>
+                        <div className="flex justify-between">
+                            <span className="font-medium">{profileStrings.email}</span>
+                            <span>{profileDetails?.email}</span>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                    <span className="font-medium">Email:</span>
-                    <span>{userDetails.email}</span>
+                {/* Profile Image Section (Optional) */}
+                <div className="mt-8 flex flex-col gap-5 items-center">
+                    <img
+                        src={imagePaths.chef || "https://via.placeholder.com/150"}
+                        alt="Profile"
+                        className="w-56 h-32 rounded-full shadow-md object-cover"
+                    />
+                    <button className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-2 py-1 font-Rubik" onClick={() => {
+                        removeCookie('Authorization');
+                        dispatch(clearUserDetails());
+                        navigate('/login')
+                    }}>{profileStrings.logout}</button>
                 </div>
             </div>
-        </div>
-        {/* Profile Image Section (Optional) */}
-        <div className="mt-8 flex flex-col gap-5 items-center">
-            <img 
-                src={chefImage || "https://via.placeholder.com/150"} 
-                alt="Profile" 
-                className="w-56 h-32 rounded-full shadow-md object-cover"
-            />
-            <button className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-2 py-1 font-Rubik" onClick={()=>{
-                removeCookie('Authorization');
-                navigate('/login')
-            }}>Log out</button>
-        </div>
-    </div>
-</>
+        </>
 
     )
 }

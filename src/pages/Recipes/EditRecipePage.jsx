@@ -1,13 +1,25 @@
-import { Navbar } from "../../components/Navbar";
-import { RecipeForm } from "../../components/RecipeForm";
+//React imports
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { recipesApi } from "../../utils/apiPaths";
-import { useNavigate, useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import smokeImage from "../../assets/smoke.jpg";
 
-export const EditRecipePage = () => {
+//Third party imports
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useNavigate, useParams } from "react-router-dom";
+
+//Static imports
+import { RecipeForm } from "../../components/RecipeForm";
+import { recipesApi } from "../../utils/apiPaths";
+import { imagePaths } from "../../utils/imageImports";
+import { editRecipeStrings } from "../../utils/constantStrings";
+import { editRecipe, getRecipeDetails } from "../../services/recipes";
+
+/*
+ * EditRecipePage component for editing an existing recipe using recipeForm component
+ * Retrieves recipe details based on recipe ID, pre-populates form with existing data, and handles updates to the API
+ * On successful edit, redirects to the recipes page
+ */
+export default function EditRecipePage() {
+    //All states
     const [apiError, setApiError] = useState("");
     const [initialValues, setInitialValues] = useState({
         title: "",
@@ -15,24 +27,37 @@ export const EditRecipePage = () => {
         image: "",
         ingredients: [""],
     });
+
+    //All constants
     const { id } = useParams();
     const navigate = useNavigate();
     const [cookies] = useCookies(["user"]);
     const token = cookies.Authorization;
 
+    //Utility functions
+    //Function to handle submission of form
+    const handleSubmit = async (values) => {
+        try {
+            const response = await editRecipe(token,values,id)
+            setApiError("");
+            navigate("/recipes");
+        } catch (error) {
+            setApiError(error.response?.data?.message || "Something went wrong");
+        }
+    };
+
+    //Use effects
     useEffect(() => {
         const fetchRecipeDetails = async () => {
             try {
+                //For empty token redirect to login page
                 if (!token) {
                     navigate('/login');
                     return
                 }
-                const response = await axios.get(`${recipesApi.getRecipeDetails}${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await getRecipeDetails(token,id)
                 const recipeData = response.data.data;
+                //Re-populate input fields
                 setInitialValues({
                     title: recipeData.title,
                     steps: recipeData.steps,
@@ -47,28 +72,12 @@ export const EditRecipePage = () => {
         fetchRecipeDetails();
     }, [id, token]);
 
-    const handleSubmit = async (values) => {
-        try {
-            const response = await axios.put(`${recipesApi.updateRecipe}${id}`, values, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            setApiError("");
-            navigate("/recipes");
-        } catch (error) {
-            setApiError(error.response?.data?.message || "Something went wrong");
-        }
-    };
-
     return (
         <>
-            <Navbar />
             <div className="dark:bg-gray-800 dark:text-white">
                 <div className="container mx-auto p-8 ">
-                    <h2 className="text-2xl font-bold text-center font-Rubik mb-6">Edit Recipe</h2>
-                    <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={smokeImage} />
+                    <h2 className="text-2xl font-bold text-center font-Rubik mb-6">{editRecipeStrings.editRecipe}</h2>
+                    <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={imagePaths.smoke} />
                 </div>
             </div>
         </>
