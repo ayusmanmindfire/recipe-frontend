@@ -15,6 +15,8 @@ import { Ratings } from "../../components/Ratings";
 import SimpleBackdrop from "../../components/Loader";
 import { imagePaths } from "../../utils/imageImports";
 import { recipeDetailsStrings } from "../../utils/constantStrings";
+import { deleteRecipe, getRecipeDetails } from "../../services/recipes";
+import { getRatingsOfARecipe } from "../../services/rating";
 
 /*
  * RecipeDetails component for displaying individual recipe details
@@ -44,11 +46,7 @@ export default function RecipeDetails() {
     // Function to delete recipe
     const handleDelete = async () => {
         try {
-            await axios.delete(`${recipesApi.deleteRecipes}${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`, // Send token in header
-                },
-            });
+            await deleteRecipe(token,id)
             navigate('/recipes');
         } catch (error) {
             console.error("Failed to delete recipe:", error);
@@ -68,17 +66,9 @@ export default function RecipeDetails() {
                     return;
                 }
 
-                const recipeResponse = await axios.get(`${recipesApi.getRecipeDetails}${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                });
+                const recipeResponse = await getRecipeDetails(token,id)
 
-                const ratingResponse = await axios.get(`${ratingsApi.getRatings}${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token in header
-                    },
-                });
+                const ratingResponse = await getRatingsOfARecipe(token,id)
                 setRecipeDetails(recipeResponse.data.data);
                 setRatings(ratingResponse.data.data);
             } catch (error) {
@@ -106,6 +96,7 @@ export default function RecipeDetails() {
                         <div className="flex space-x-2">
                             {/* Star Button */}
                             <button
+                                data-testid="rateButton"
                                 onClick={handleOpen}
                                 className="bg-green-400 hover:bg-green-600 text-white px-4 py-2 rounded-full"
                             >
@@ -127,6 +118,7 @@ export default function RecipeDetails() {
                                 <>
                                     {/* Edit Button */}
                                     <button
+                                        data-testid="editButton"
                                         onClick={handleEdit}
                                         className="bg-blue-400 hover:bg-blue-600 text-white px-4 py-2 rounded-full"
                                     >
@@ -135,6 +127,7 @@ export default function RecipeDetails() {
 
                                     {/* Delete Button */}
                                     <button
+                                        data-testid="deleteButton"
                                         onClick={handleDelete}
                                         className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-full"
                                     >
