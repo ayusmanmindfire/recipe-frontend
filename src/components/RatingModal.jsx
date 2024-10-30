@@ -2,14 +2,13 @@
 import React, { useEffect, useState } from 'react';
 
 //Third party imports
-import axios from 'axios';
 import { useFormik } from 'formik';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 //Static imports
-import { ratingsApi } from '../utils/apiPaths';
 import { ratingStrings } from '../utils/constantStrings';
+import { addRating } from '../services/rating';
 
 // Form validation
 const validate = (values) => {
@@ -50,11 +49,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
         validate,
         onSubmit: async (values) => {
             try {
-                const response = await axios.post(ratingsApi.addRatings + recipeID, values, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    }
-                })
+                const response = await addRating(token,values,recipeID)
                 handleClose();
 
             } catch (error) {

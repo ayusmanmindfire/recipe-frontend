@@ -52,7 +52,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
     };
 
     return (
-        <div className="grid grid-cols-1 p-5 gap-5 md:h-screen md:grid-cols-2 font-Rubik bg-white dark:bg-gray-800 transition-colors duration-200">
+        <div className="grid grid-cols-1 p-5 gap-5 dark:h-full md:h-screen md:grid-cols-2 font-Rubik bg-white dark:bg-gray-800 transition-colors duration-200">
             <form onSubmit={formik.handleSubmit} className="dark:bg-gray-800 space-y-4">
                 {/* Title */}
                 <div>
