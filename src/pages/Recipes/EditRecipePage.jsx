@@ -11,6 +11,7 @@ import { RecipeForm } from "../../components/RecipeForm";
 import { recipesApi } from "../../utils/apiPaths";
 import { imagePaths } from "../../utils/imageImports";
 import { editRecipeStrings } from "../../utils/constantStrings";
+import { editRecipe, getRecipeDetails } from "../../services/recipes";
 
 /*
  * EditRecipePage component for editing an existing recipe using recipeForm component
@@ -37,12 +38,7 @@ export default function EditRecipePage() {
     //Function to handle submission of form
     const handleSubmit = async (values) => {
         try {
-            const response = await axios.put(`${recipesApi.updateRecipe}${id}`, values, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            const response = await editRecipe(token,values,id)
             setApiError("");
             navigate("/recipes");
         } catch (error) {
@@ -59,11 +55,7 @@ export default function EditRecipePage() {
                     navigate('/login');
                     return
                 }
-                const response = await axios.get(`${recipesApi.getRecipeDetails}${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await getRecipeDetails(token,id)
                 const recipeData = response.data.data;
                 //Re-populate input fields
                 setInitialValues({

@@ -134,6 +134,7 @@ export const RecipeForm = ({ initialValues, onSubmit, apiError, imageSection }) 
                 {/* Image File Upload */}
                 <div>
                     <input
+                        data-testid="image-upload"
                         type="file"
                         name="image"
                         onChange={(e) => formik.setFieldValue("image", e.target.files[0])}
