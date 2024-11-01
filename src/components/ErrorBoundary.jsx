@@ -12,13 +12,13 @@ class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
-        // Log error details to the console without displaying them in the UI
+        // Log error details to the console
         console.error("Error Boundary caught an error:", error, errorInfo);
     }
 
     render() {
         if (this.state.hasError) {
-            // Redirect to a generic error page without showing error details in the UI
+            // Redirect to a generic error page
             return <Navigate to="/error" replace />;
         }
         return this.props.children;
