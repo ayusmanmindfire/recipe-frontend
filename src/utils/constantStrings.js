@@ -44,7 +44,9 @@ export const recipesPageStrings={
     searchButton:"Search",
     addRecipeButton:"Add recipe",
     addRecipeResponsive:"+",
-    noRecipes:"No recipes found"
+    noRecipes:"No recipes found",
+    previousPage:"Previous",
+    nextPage:"Next"
 }
 
 export const NavbarStrings={

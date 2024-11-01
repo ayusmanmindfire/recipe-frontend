@@ -59,7 +59,7 @@ describe('Recipes page component', () => {
 
     test('fetches and displays recipes on component mount', async () => {
 
-        axios.get.mockResolvedValueOnce({ data: { data: mockRecipes } });
+        axios.get.mockResolvedValueOnce({ data: { data:{recipes: mockRecipes } }});
 
         renderWithProviders(<RecipesPage />, { reduxStore: store });
 
@@ -92,7 +92,7 @@ describe('Recipes page component', () => {
     test('searches for recipes based on query input', async () => {
 
         // Mock initial fetch with all recipes
-        axios.get.mockResolvedValueOnce({ data: { data: mockRecipes } });
+        axios.get.mockResolvedValueOnce({ data: { data:{recipes: mockRecipes } }});
 
         renderWithProviders(<RecipesPage />, { reduxStore: store });
 
@@ -119,7 +119,7 @@ describe('Recipes page component', () => {
 
     test('navigates to add recipe page on button click', async () => {
         // Mock initial fetch with all recipes
-        axios.get.mockResolvedValueOnce({ data: { data: mockRecipes } });
+        axios.get.mockResolvedValueOnce({ data: { data:{recipes:mockRecipes }} });
 
         renderWithProviders(<RecipesPage />, { reduxStore: store });
         // Wait for the add recipe button to be rendered
