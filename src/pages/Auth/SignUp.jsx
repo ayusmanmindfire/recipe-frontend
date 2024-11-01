@@ -72,7 +72,7 @@ export default function SignUp() {
 
     return (
         <>
-            <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100">
+            <div className="dark:bg-gray-600 dark:h-screen section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100">
                 
                 {/* Form Container */}
                 <div className="form-container w-full bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800">

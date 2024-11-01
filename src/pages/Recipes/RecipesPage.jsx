@@ -25,6 +25,8 @@ export default function RecipesPage() {
     const [recipes, setRecipes] = useState([]); // State to hold the fetched recipes
     const [loading, setLoading] = useState(true); // State to handle loading state
     const [error, setError] = useState(null); // State to handle any error
+    const [page, setPage] = useState(1);  // Track current page
+    const [totalPages, setTotalPages] = useState(1); // Track total pages
 
     //All constants
     const [cookies, setCookie] = useCookies(['user']);
@@ -44,29 +46,40 @@ export default function RecipesPage() {
             navigate('/error')
         }
     }
+
+    //function for handling next page
+    const handleNextPage = () => {
+        if (page < totalPages) setPage(page + 1);
+    };
+
+    //function for handling previous page
+    const handlePreviousPage = () => {
+        if (page > 1) setPage(page - 1);
+    };
+
+    // Fetch recipes on component mount with pagination
+    const fetchRecipes = async (page) => {
+        try {
+            if (!token || !userDetails) {
+                navigate('/login');
+                return;
+            }
+            setLoading(true)
+            const response = await getAllRecipe(token, page, 8);
+            setRecipes(response.data.data.recipes);
+            setTotalPages(response.data.data.pagination.totalPages);
+        } catch (error) {
+            if (error.response && error.response.status === 401) navigate('/login');
+            setError(error.response ? error.response.data.message : error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
     
     //Use effects
-    // Fetch recipes on component mount
     useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                if (!token||!userDetails) {
-                    navigate('/login');
-                    return
-                }
-                const response = await getAllRecipe(token)
-                setRecipes(response.data.data);
-            } catch (error) {
-                if (error.response && error.response.status === 401)
-                    navigate('/login')
-                setError(error.response ? error.response.data.message : error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchRecipes();
-    }, []);
+        fetchRecipes(page);
+    }, [page]);
 
     // Conditional rendering based on loading and error states
     if (loading) {
@@ -80,6 +93,7 @@ export default function RecipesPage() {
     return (
         <>
             <div className="recipes-page dark:bg-gray-700 p-4 transition-colors duration-200">
+                {/* Search field and add new recipe button */}
                 <div className="flex justify-evenly gap-1  mb-3 h-10">
                     <div className="flex mb-3 h-10 gap-2">
                         <input type="text" value={query} onChange={(e)=>{setQuery(e.target.value)}} placeholder="Search" className="px-5 w-full border rounded-lg focus:outline-none focus:border-primary" />
@@ -97,7 +111,7 @@ export default function RecipesPage() {
 
                 </div>
 
-
+                {/* All recipes */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {recipes.length > 0 ? (
                         recipes.map((recipe) => (
@@ -114,6 +128,25 @@ export default function RecipesPage() {
                     ) : (
                         <div>{recipesPageStrings.noRecipes}</div>
                     )}
+                </div>
+
+                {/* pagination */}
+                <div className="flex justify-center mt-4">
+                    <button 
+                        onClick={handlePreviousPage} 
+                        disabled={page === 1} 
+                        className="px-4 py-2 mx-2 bg-primary hover:bg-hoverPrimary hover:text-black text-white rounded disabled:bg-gray-300 disabled:text-black"
+                    >
+                        {recipesPageStrings.previousPage}
+                    </button>
+                    <span className="mx-2">Page {page} of {totalPages}</span>
+                    <button 
+                        onClick={handleNextPage} 
+                        disabled={page === totalPages} 
+                        className="px-4 py-2 mx-2 bg-primary hover:bg-hoverPrimary hover:text-black text-white rounded disabled:bg-gray-300 disabled:text-black"
+                    >
+                        {recipesPageStrings.nextPage}
+                    </button>
                 </div>
             </div>
         </>
