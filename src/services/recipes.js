@@ -19,9 +19,10 @@ export async function searchRecipes(query,token){
 }
 
 //function for calling api for get all recipes
-export async function getAllRecipe(token){
+export async function getAllRecipe(token,page=1,limit){
     try {
-        const response = await axios.get(recipesApi.getAllRecipes, {
+        const queryForPage=`?page=${page}&limit=${limit}`
+        const response = await axios.get(recipesApi.getAllRecipes+queryForPage, {
             headers: {
                 Authorization: `Bearer ${token}`, // Send token in header
             },

@@ -72,7 +72,7 @@ export default function Login(){
     
     return(
         <>
-            <div className="dark:bg-gray-600 section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100 ">
+            <div className="dark:bg-gray-600 dark:h-screen section-container grid grid-cols-1 items-center gap-10 md:h-screen md:grid-cols-2 p-10 font-Rubik bg-gray-100 ">
                  {/*Signup option */}
                  <div className="flex flex-col items-center justify-center space-y-4">
                     <p className="text-lg dark:text-white">{loginStrings.noAccount}</p>
