@@ -6,6 +6,7 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import SimpleBackdrop from './components/Loader';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Lazy-loaded pages for code splitting
 const LandingPage = lazy(() => import('./pages/Common/LandingPage'));
@@ -31,7 +32,8 @@ function NavWrapper() {
 }
 
 function App() {
-  return (    
+  return (
+    <ErrorBoundary>
       <Routes>
         {/* Routes wrapped in NavWrapper for consistent navbar layout */}
         <Route element={<NavWrapper />}>
@@ -47,6 +49,7 @@ function App() {
           <Route path='/*' element={<ErrorPage />} />
         </Route>
       </Routes>
+    </ErrorBoundary>
   );
 }
 
