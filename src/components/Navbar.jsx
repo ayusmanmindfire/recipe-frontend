@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 //Static imports
 import { toggleTheme } from '../redux/themeSlice';
 import { NavbarStrings } from '../utils/constantStrings';
+import { navRoutes } from '../utils/navigationRoutes';
 
 /**
  * Navbar component for navigating between app sections (Home, Recipes, Profile) and toggling theme.
@@ -56,9 +57,9 @@ export default function Navbar() {
                 {/* Desktop Menu */}
                 <div className="hidden md:flex gap-3 items-center">
                     <button className={linkStyle} onClick={() => dispatch(toggleTheme())}>{theme}</button>
-                    <button className={linkStyle} onClick={() => navigate("/")}>{NavbarStrings.home}</button>
-                    <button className={linkStyle} onClick={() => navigate("/recipes")}>{NavbarStrings.recipes}</button>
-                    <button className={linkStyle} onClick={() => navigate("/profile")}>{NavbarStrings.profile}</button>
+                    <button className={linkStyle} onClick={() => navigate(navRoutes.home)}>{NavbarStrings.home}</button>
+                    <button className={linkStyle} onClick={() => navigate(navRoutes.recipes)}>{NavbarStrings.recipes}</button>
+                    <button className={linkStyle} onClick={() => navigate(navRoutes.profile)}>{NavbarStrings.profile}</button>
                 </div>
             </div>
 
@@ -71,13 +72,13 @@ export default function Navbar() {
                         }}>{theme}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
-                        navigate("/"); }}>{NavbarStrings.home}</button>
+                        navigate(navRoutes.home); }}>{NavbarStrings.home}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
-                        navigate("/recipes"); }}>{NavbarStrings.recipes}</button>
+                        navigate(navRoutes.recipes); }}>{NavbarStrings.recipes}</button>
                     <button className={`${linkStyle} w-full block text-left`} onClick={() => { 
                         setIsOpen(false);
-                        navigate("/profile"); }}>{NavbarStrings.profile}</button>
+                        navigate(navRoutes.profile); }}>{NavbarStrings.profile}</button>
                 </div>
             )}
         </nav>

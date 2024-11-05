@@ -17,6 +17,7 @@ import { imagePaths } from "../../utils/imageImports";
 import { recipeDetailsStrings } from "../../utils/constantStrings";
 import { deleteRecipe, getRecipeDetails } from "../../services/recipes";
 import { getRatingsOfARecipe } from "../../services/rating";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 /*
  * RecipeDetails component for displaying individual recipe details
@@ -47,14 +48,14 @@ export default function RecipeDetails() {
     const handleDelete = async () => {
         try {
             await deleteRecipe(token,id)
-            navigate('/recipes');
+            navigate(navRoutes.recipes);
         } catch (error) {
             console.error("Failed to delete recipe:", error);
         }
     };
     //function to handle edit recipe
     const handleEdit = () => {
-        navigate(`/editRecipe/${id}`);
+        navigate(`${navRoutes.editRecipe}${id}`);
     }
 
     // Fetch recipe details
@@ -62,7 +63,7 @@ export default function RecipeDetails() {
         const fetchRecipeDetails = async () => {
             try {
                 if (!token||!userResponse) {
-                    navigate('/login');
+                    navigate(navRoutes.login);
                     return;
                 }
 
@@ -72,7 +73,7 @@ export default function RecipeDetails() {
                 setRecipeDetails(recipeResponse.data.data);
                 setRatings(ratingResponse.data.data);
             } catch (error) {
-                navigate('/error');
+                navigate(navRoutes.error);
             } finally {
                 setLoading(false);
             }

@@ -11,6 +11,7 @@ import SimpleBackdrop from "../../components/Loader";
 import { imagePaths } from "../../utils/imageImports";
 import { clearUserDetails } from "../../redux/userSlice";
 import { profileStrings } from "../../utils/constantStrings";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 /** Profile component to display user information after authentication
 * Fetches user details based on a valid token and displays profile data
@@ -34,14 +35,14 @@ export default function Profile(){
         const fetchUserData = async () => {
             try {
                 if (!token||!userDetails) {
-                    navigate('/login')
+                    navigate(navRoutes.login)
                     return
                 }
                 //Setting the fetched data from redux store to current state
                 setProfileDetails(userDetails);
 
             } catch (error) {
-                navigate('/error')
+                navigate(navRoutes.error)
             } finally {
                 setLoading(false);
             }
@@ -83,7 +84,7 @@ export default function Profile(){
                     <button className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-2 py-1 font-Rubik" onClick={() => {
                         removeCookie('Authorization');
                         dispatch(clearUserDetails());
-                        navigate('/login')
+                        navigate(navRoutes.login)
                     }}>{profileStrings.logout}</button>
                 </div>
             </div>

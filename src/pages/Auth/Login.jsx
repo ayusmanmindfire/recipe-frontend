@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../redux/userSlice";
 import { loginStrings } from "../../utils/constantStrings";
 import { userLogin, verifyToken } from "../../services/auth";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 //formik validation function
 const validate=(values)=>{
@@ -60,7 +61,7 @@ export default function Login(){
                 dispatch(setUserDetails(userResponse.data.data));
                 
                 //Navigate to the all recipes page
-                navigate('/recipes');
+                navigate(navRoutes.recipes);
             } catch (error) {
                 if(error.response)
                     setApiError(error.response.data.message||"Something went wrong")
@@ -78,7 +79,7 @@ export default function Login(){
                     <p className="text-lg dark:text-white">{loginStrings.noAccount}</p>
                     <button
                         className="bg-primary hover:bg-hoverPrimary text-white py-3 px-6 rounded-lg font-semibold"
-                        onClick={() => navigate('/signup')}
+                        onClick={() => navigate(navRoutes.signup)}
                     >
                         {loginStrings.signUpButton}
                     </button>

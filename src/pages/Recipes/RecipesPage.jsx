@@ -11,6 +11,7 @@ import { RecipeCard } from "../../components/RecipeCard";
 import SimpleBackdrop from "../../components/Loader";
 import { recipesPageStrings } from "../../utils/constantStrings";
 import { getAllRecipe, searchRecipes } from "../../services/recipes";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 //Environment variable
 const apiUrl=process.env.REACT_APP_API_URL;
@@ -43,7 +44,7 @@ export default function RecipesPage() {
             const response=await searchRecipes(query,token);
             setRecipes(response.data.data)
         } catch (error) {
-            navigate('/error')
+            navigate(navRoutes.error)
         }
     }
 
@@ -61,7 +62,7 @@ export default function RecipesPage() {
     const fetchRecipes = async (page) => {
         try {
             if (!token || !userDetails) {
-                navigate('/login');
+                navigate(navRoutes.login);
                 return;
             }
             setLoading(true)
@@ -69,7 +70,7 @@ export default function RecipesPage() {
             setRecipes(response.data.data.recipes);
             setTotalPages(response.data.data.pagination.totalPages);
         } catch (error) {
-            if (error.response && error.response.status === 401) navigate('/login');
+            if (error.response && error.response.status === 401) navigate(navRoutes.login);
             setError(error.response ? error.response.data.message : error.message);
         } finally {
             setLoading(false);
@@ -87,7 +88,7 @@ export default function RecipesPage() {
     }
 
     if (error) {
-        navigate('/error')
+        navigate(navRoutes.error)
     }
 
     return (
@@ -101,11 +102,11 @@ export default function RecipesPage() {
                     </div>
                     <div>
                         <button className="hidden sm:flex bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 font-Rubik" onClick={()=>{
-                            navigate('/addRecipe')
+                            navigate(navRoutes.addRecipe)
                         }}>{recipesPageStrings.addRecipeButton}</button>
                         {/* Responsive button */}
                         <button className="sm:hidden bg-green-500 hover:bg-green-600 text-white rounded-2xl p-2 px-4 font-bold font-Rubik" onClick={()=>{
-                            navigate('/addRecipe')
+                            navigate(navRoutes.addRecipe)
                         }}>{recipesPageStrings.addRecipeResponsive}</button>
                     </div>
 
