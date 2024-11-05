@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 //Static imports
 import { signUpStrings } from "../../utils/constantStrings";
 import { registerUser } from "../../services/auth";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 //Form validation
 const validate = (values) => {
@@ -57,7 +58,7 @@ export default function SignUp() {
                 const response = await registerUser(values);
                 // console.log("Registration successful:", response.data);
                 setApiError("");
-                navigate('/login'); //On successful registration navigate to login
+                navigate(navRoutes.login); //On successful registration navigate to login
             } catch (error) {
                 if (error.response) {
                     // API error response
@@ -146,7 +147,7 @@ export default function SignUp() {
                     <p className="text-lg dark:text-white">{signUpStrings.haveAnAccount}</p>
                     <button
                         className="bg-primary hover:bg-hoverPrimary text-white py-3 px-6 rounded-lg font-semibold"
-                        onClick={() => navigate('/login')}
+                        onClick={() => navigate(navRoutes.login)}
                     >
                         {signUpStrings.loginButton}
                     </button>

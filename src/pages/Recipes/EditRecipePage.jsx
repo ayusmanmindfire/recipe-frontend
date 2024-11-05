@@ -2,16 +2,15 @@
 import { useEffect, useState } from "react";
 
 //Third party imports
-import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 
 //Static imports
 import { RecipeForm } from "../../components/RecipeForm";
-import { recipesApi } from "../../utils/apiPaths";
 import { imagePaths } from "../../utils/imageImports";
 import { editRecipeStrings } from "../../utils/constantStrings";
 import { editRecipe, getRecipeDetails } from "../../services/recipes";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 /*
  * EditRecipePage component for editing an existing recipe using recipeForm component
@@ -40,7 +39,7 @@ export default function EditRecipePage() {
         try {
             const response = await editRecipe(token,values,id)
             setApiError("");
-            navigate("/recipes");
+            navigate(navRoutes.recipes);
         } catch (error) {
             setApiError(error.response?.data?.message || "Something went wrong");
         }
@@ -52,7 +51,7 @@ export default function EditRecipePage() {
             try {
                 //For empty token redirect to login page
                 if (!token) {
-                    navigate('/login');
+                    navigate(navRoutes.login);
                     return
                 }
                 const response = await getRecipeDetails(token,id)

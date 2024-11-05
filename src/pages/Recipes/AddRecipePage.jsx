@@ -10,6 +10,7 @@ import { RecipeForm } from "../../components/RecipeForm";
 import { imagePaths } from "../../utils/imageImports";
 import { addRecipeStrings } from "../../utils/constantStrings";
 import { addRecipe } from "../../services/recipes";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 /* 
  * AddRecipePage component for creating a new recipe using RecipeForm component
@@ -37,7 +38,7 @@ export default function AddRecipePage(){
         try {
             const response = await addRecipe(token,values)
             setApiError("");
-            navigate("/recipes");
+            navigate(navRoutes.recipes);
         } catch (error) {
             setApiError(error.response?.data?.message || "Something went wrong");
         }
@@ -47,7 +48,7 @@ export default function AddRecipePage(){
     //For empty token navigate to login page
     useEffect(()=>{
         if(!token)
-            navigate('/login')
+            navigate(navRoutes.login)
     },[])
 
     return (
