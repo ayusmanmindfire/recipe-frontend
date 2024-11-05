@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 //Static imports
 import { ratingStrings } from '../utils/constantStrings';
 import { addRating } from '../services/rating';
+import { navRoutes } from '../utils/navigationRoutes';
 
 // Form validation
 const validate = (values) => {
@@ -56,7 +57,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
                 if (error.response)
                     setApiError(error.response.data.message);
                 else
-                    navigate('/error')
+                    navigate(navRoutes.error)
             }
 
         }
@@ -66,7 +67,7 @@ export const RatingModal = ({ recipeID, handleClose }) => {
     //For empty token navigate to login page
     useEffect(() => {
         if (!token) {
-            navigate('/login')
+            navigate(navRoutes.login)
         }
     })
 

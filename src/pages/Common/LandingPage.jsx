@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { CustomButton } from "../../components/CustomButton";
 import { imagePaths } from "../../utils/imageImports";
 import { landingPageStrings } from "../../utils/constantStrings";
+import { navRoutes } from "../../utils/navigationRoutes";
 
 /* 
  * LandingPage component for displaying the main introduction and call-to-action buttons
@@ -27,8 +28,8 @@ export default function LandingPage(){
                            {landingPageStrings.homeText}
                         </div>
                         <div className="flex gap-2">
-                            <CustomButton text="Sign UP" eventFunction={() => { navigate('/signup') }} />
-                            <CustomButton text="Go to recipes" eventFunction={() => { navigate('/recipes') }} />
+                            <CustomButton text="Sign UP" eventFunction={() => { navigate(navRoutes.signup) }} />
+                            <CustomButton text="Go to recipes" eventFunction={() => { navigate(navRoutes.recipes) }} />
                         </div>
                     </div>
                 </div>
