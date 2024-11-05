@@ -53,7 +53,7 @@ export default function AddRecipePage(){
 
     return (
         <>
-            <div className="dark:bg-gray-800 dark:text-white h-full">
+            <div className="min-h-screen dark:bg-gray-800 dark:text-white h-full">
             <div className="container mx-auto py-5">
                 <h2 className="text-2xl font-bold text-center font-Rubik">{addRecipeStrings.addRecipe}</h2>
                 <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={imagePaths.eggCooking} />
