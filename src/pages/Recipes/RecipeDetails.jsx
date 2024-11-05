@@ -88,7 +88,7 @@ export default function RecipeDetails() {
 
     return (
         <>
-            <div className="dark:bg-gray-800 transition-colors duration-200">
+            <div className="min-h-screen dark:bg-gray-800 transition-colors duration-200">
                 <div className="container mx-auto dark:bg-gray-700 dark:text-white p-4 md:p-8">
                     {/* Recipe Details Header */}
                     <div className="flex justify-between items-center mb-6">

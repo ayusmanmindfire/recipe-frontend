@@ -73,7 +73,7 @@ export default function EditRecipePage() {
 
     return (
         <>
-            <div className="dark:bg-gray-800 dark:text-white">
+            <div className="min-h-screen dark:bg-gray-800 dark:text-white">
                 <div className="container mx-auto p-8 ">
                     <h2 className="text-2xl font-bold text-center font-Rubik mb-6">{editRecipeStrings.editRecipe}</h2>
                     <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} apiError={apiError} imageSection={imagePaths.smoke} />
